@@ -4,6 +4,7 @@
   #:use-module (smc core context)
   #:export (<ini-context>
             stanza->list-of-strings
+            action:syntax-error
             action:start-section
             action:append-property))
 
@@ -24,6 +25,9 @@
   (list->string (stack-content/reversed buffer)))
 
 
+
+(define (action:syntax-error ch ctx)
+  (error "Syntax error"))
 
 (define (action:start-section ch ctx)
   (let ((title (buffer->string (context-buffer ctx))))

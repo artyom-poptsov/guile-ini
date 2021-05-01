@@ -51,7 +51,7 @@ guilec_opts = --load-path=$(abs_top_srcdir)/modules/
 	--output=$@ $<
 
 .puml.scm:
-	cat fsm.puml | smc -L $(top_srcdir)/modules -U "((ini fsm-implementation))" --fsm-name ini-fsm --fsm-module "(ini fsm)" > fsm.scm
+	cat fsm.puml | smc -L $(top_srcdir)/modules -U "((ini fsm-implementation) (smc guards char) (smc core context))" --fsm-name ini-fsm --fsm-module "(ini fsm)" > fsm.scm
 
 clean-go:
 	-$(RM) $(GOBJECTS)
