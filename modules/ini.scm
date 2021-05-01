@@ -11,6 +11,7 @@
 (define* (ini->scm port #:key (debug-mode? #f))
   (let ((fsm (make <ini-fsm>)))
     (fsm-debug-mode-set! fsm debug-mode?)
+    (pretty-print (hash-table->transition-list (fsm-transition-table fsm)))
     (let loop ((context (make <ini-context>
                           #:module (list (resolve-module '(smc guards char))
                                          (resolve-module '(smc puml))
