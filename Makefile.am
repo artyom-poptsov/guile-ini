@@ -19,7 +19,7 @@
 
 ACLOCAL_AMFLAGS = -I build-aux
 
-SUBDIRS = build-aux modules/ini
+SUBDIRS = build-aux modules
 
 EXTRA_DIST = \
 	.dir-locals.el
