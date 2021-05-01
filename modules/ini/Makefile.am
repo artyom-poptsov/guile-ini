@@ -17,26 +17,50 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-INI.  If not, see <http://www.gnu.org/licenses/>.
 
+include $(top_srcdir)/build-aux/am/guilec
+
 SOURCES = \
-	fsm.scm				 				 \
 	fsm-implementation.scm
 
 EXTRA_DIST = \
-	fsm.puml
+	fsm.scm	\
+	fsm.scm.puml
 
-SUFFIXES = .puml
+GOBJECTS = $(SOURCES:%.scm=%.go)
 
-substitute = sed -e 's,[@]GUILE[@],$(GUILE),g'
+moddir=$(guilesitedir)/ini/
+nobase_dist_mod_DATA = $(SOURCES)
 
-.puml:
-	cat fsm.puml \
-	| smc \
-			-L . \
-			-U "((ini fsm-implementation))" \
-			--fsm-name ini-fsm \
-			--fsm-module "(ini fsm)" > fsm.scm
+ccachedir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache
+nobase_nodist_ccache_DATA = $(GOBJECTS) fsm.scm
+
+# Make sure source files are installed first, so that the mtime of
+# installed compiled files is greater than that of installed source
+# files.  See
+# <http://lists.gnu.org/archive/html/guile-devel/2010-07/msg00125.html>
+# for details.
+guile_smc_install_go_files = install-nobase_dist_ccacheDATA
+$(guile_smc_install_go_files): install-nobase_dist_modDATA
+
+GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
+SUFFIXES = .scm .go .puml
+
+guilec_opts = --load-path=$(abs_top_srcdir)/modules/
+.scm.go:
+	$(AM_V_GUILEC)$(guilec_env) $(GUILEC) $(guilec_opts) \
+	--output=$@ $<
+
+.puml.scm:
+	cat fsm.puml | smc -L $(top_srcdir)/modules -U "((ini fsm-implementation))" --fsm-name ini-fsm --fsm-module "(ini fsm)" > fsm.scm
+
+clean-go:
+	-$(RM) $(GOBJECTS)
+
+.PHONY: clean-go
+
 
 CLEANFILES = \
-	fsm.scm
+	fsm.scm	\
+	$(GOBJECTS)
 
 ### Makefile.am ends here.
