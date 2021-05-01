@@ -20,6 +20,7 @@
 include $(top_srcdir)/build-aux/am/guilec
 
 SOURCES = \
+	fsm.scm	\
 	fsm-implementation.scm
 
 EXTRA_DIST = \
