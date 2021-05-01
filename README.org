@@ -1,2 +1,6 @@
 * Guile-INI
   A GNU Guile library for working with INI format.
+
+** Requirements
+   - [[https://www.gnu.org/software/guile/][GNU Guile]] 2.2+
+   - [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]]
