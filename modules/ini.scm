@@ -6,7 +6,7 @@
   #:use-module (oop goops)
   #:use-module (smc fsm)
   #:use-module (ini fsm)
-  #:use-module (ini fsm-implementation)
+  #:use-module (ini fsm-context)
   #:export (ini->scm
             scm->ini))
 

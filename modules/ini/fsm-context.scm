@@ -1,4 +1,4 @@
-(define-module (ini fsm-implementation)
+(define-module (ini fsm-context)
   #:use-module (oop goops)
   #:use-module (smc core stack)
   #:use-module (smc core context)
