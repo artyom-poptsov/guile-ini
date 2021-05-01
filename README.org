@@ -1,0 +1,2 @@
+* Guile-INI
+  A GNU Guile library for working with INI format.
