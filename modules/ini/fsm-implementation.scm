@@ -3,6 +3,7 @@
   #:use-module (smc core stack)
   #:use-module (smc core context)
   #:export (<ini-context>
+            ini-context-result
             stanza->list-of-strings
             action:syntax-error
             action:start-section
