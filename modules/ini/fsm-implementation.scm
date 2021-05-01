@@ -34,15 +34,19 @@
   (let ((title (buffer->string (context-buffer ctx))))
     (ini-context-result-set! ctx (cons (list title)
                                        (ini-context-result ctx)))
+    (context-buffer-clear! ctx)
     ctx))
 
 (define (action:append-property ch ctx)
   (let ((stanza (stanza->list-of-strings (context-stanza ctx)))
+        (buffer (context-buffer ctx))
         (result (ini-context-result ctx)))
     (ini-context-result-set! ctx
                              (cons
                               (append (car result)
-                                      (list (cons (list-ref stanza 0)
-                                                  (list-ref stanza 1))))
+                                      (list (cons (car stanza)
+                                                  (buffer->string buffer))))
                               (cdr result)))
+    (context-buffer-clear! ctx)
+    (context-stanza-clear! ctx)
     ctx))
