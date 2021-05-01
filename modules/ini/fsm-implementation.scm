@@ -41,7 +41,6 @@
   (let ((stanza (stanza->list-of-strings (context-stanza ctx)))
         (buffer (context-buffer ctx))
         (result (ini-context-result ctx)))
-    (format (current-error-port) "result: ~a~%" result)
     (ini-context-result-set! ctx
                              (cons
                               (append (if (null? result)
