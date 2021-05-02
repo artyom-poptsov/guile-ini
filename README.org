@@ -4,3 +4,21 @@
 ** Requirements
    - [[https://www.gnu.org/software/guile/][GNU Guile]] 2.2+
    - [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]]
+
+** Usage
+   This program reads an INI data from the standard input, converts it to a
+   scheme list and then converts it back to INI data:
+#+BEGIN_EXAMPLE scheme
+#!/usr/bin/guile \
+-L modules -e main -s
+!#
+
+(use-modules (ice-9 pretty-print)
+             (ini))
+
+(define (main args)
+  (let ((data (ini->scm (current-input-port))))
+    (pretty-print data)
+    (scm->ini data (current-output-port))))
+#+END_EXAMPLE
+   
