@@ -8,10 +8,13 @@ read --> read_section_title: guard:left-square-bracket?
 read --> read_property_key: guard:letter? -> action:store
 read -> read
 
+read_property_key: Read a property key.
 read_property_key ---> [*]: guard:eof-object? -> action:syntax-error
+read_property_key ---> [*]: guard:newline? -> action:syntax-error
 read_property_key --> read_property_value: guard:equals-sign? -> action:update-stanza
 read_property_key -> read_property_key: guard:#t -> action:store
 
+read_property_value: Read a property value.
 read_property_value ---> [*]: guard:eof-object? -> action:syntax-error
 read_property_value --> read: guard:newline? -> action:append-property
 read_property_value -> read_property_value: guard:#t -> action:store
