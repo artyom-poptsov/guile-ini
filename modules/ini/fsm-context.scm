@@ -28,7 +28,7 @@
 
 
 (define (action:syntax-error ch ctx)
-  (error "Syntax error"))
+  (error "Syntax error" ch ctx))
 
 (define (action:start-section ch ctx)
   (let ((title (buffer->string (context-buffer ctx))))
