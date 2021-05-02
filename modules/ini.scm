@@ -21,7 +21,10 @@
           (fsm-run! fsm (get-char port) context)
         (if new-state
             (loop new-context)
-            (ini-context-result new-context))))))
+            (begin
+              (when debug-mode?
+                (pretty-print (fsm-statistics fsm) (current-error-port)))
+              (ini-context-result new-context)))))))
 
 
 
