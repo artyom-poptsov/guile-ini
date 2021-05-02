@@ -29,6 +29,7 @@ read_section_title --> [*]: guard:eof-object?
 read_section_title --> read_section_content: guard:right-square-bracket? -> action:start-section
 read_section_title --> read_section_title: guard:#t -> action:store
 
+read_section_content ---> [*]: guard:eof-object?
 read_section_content --> skip_comment: guard:semicolon?
 read_section_content --> read_section_property_key: guard:letter? -> action:store
 read_section_content --> read_section_title: guard:left-square-bracket?
@@ -38,7 +39,8 @@ skip_comment --> [*]: guard:eof-object?
 skip_comment --> read_section_content: guard:newline?
 skip_comment -> skip_comment
 
-read_section_property_key ---> [*]: guard:eof-object?
+read_section_property_key ---> [*]: guard:eof-object? -> action:syntax-error
+read_section_property_key ---> [*]: guard:newline? -> action:syntax-error
 read_section_property_key --> read_section_property_value: guard:equals-sign? -> action:update-stanza
 read_section_property_key -> read_section_property_key: guard:#t -> action:store
 
