@@ -11,8 +11,20 @@ read -> read
 read_property_key: Read a property key.
 read_property_key ---> [*]: guard:eof-object? -> action:syntax-error
 read_property_key ---> [*]: guard:newline? -> action:syntax-error
-read_property_key --> read_property_value: guard:equals-sign? -> action:update-stanza
+read_property_key --> trim_property_key: guard:space?
+read_property_key --> trim_property_value: guard:equals-sign? -> action:update-stanza
 read_property_key -> read_property_key: guard:#t -> action:store
+
+trim_property_key: Skip all trailing spaces after the key.
+trim_property_key ---> [*]: guard:eof-object? -> action:syntax-error
+trim_property_key ---> [*]: guard:letter? -> action:syntax-error
+trim_property_key --> trim_property_value: guard:equals-sign? -> action:update-stanza
+trim_property_key -> trim_property_key
+
+trim_property_value ---> [*]: guard:eof-object? -> action:syntax-error
+trim_property_value ---> [*]: guard:letter? -> action:syntax-error
+trim_property_value --> read_property_value: guard:letter? -> action:store
+trim_property_value -> trim_property_value
 
 read_property_value: Read a property value.
 read_property_value ---> [*]: guard:eof-object? -> action:syntax-error
@@ -41,8 +53,20 @@ skip_comment -> skip_comment
 
 read_section_property_key ---> [*]: guard:eof-object? -> action:syntax-error
 read_section_property_key ---> [*]: guard:newline? -> action:syntax-error
-read_section_property_key --> read_section_property_value: guard:equals-sign? -> action:update-stanza
+read_section_property_key --> trim_section_property_key: guard:space?
+read_section_property_key --> trim_section_property_value: guard:equals-sign? -> action:update-stanza
 read_section_property_key -> read_section_property_key: guard:#t -> action:store
+
+trim_section_property_key: Skip all trailing spaces after the key.
+trim_section_property_key ---> [*]: guard:eof-object? -> action:syntax-error
+trim_section_property_key ---> [*]: guard:letter? -> action:syntax-error
+trim_section_property_key --> trim_section_property_value: guard:equals-sign? -> action:update-stanza
+trim_section_property_key -> trim_section_property_key
+
+trim_section_property_value ---> [*]: guard:eof-object? -> action:syntax-error
+trim_section_property_value --> trim_section_property_value: guard:space?
+trim_section_property_value --> read_section_property_value: guard:newline?
+trim_section_property_value --> read_section_property_value: guard:#t -> action:store
 
 read_section_property_value ---> [*]: guard:eof-object?
 read_section_property_value --> read_section_content: guard:newline? -> action:append-property
