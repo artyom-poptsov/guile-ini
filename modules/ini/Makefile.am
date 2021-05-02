@@ -25,15 +25,15 @@ SOURCES = \
 
 EXTRA_DIST = \
 	fsm.scm	\
-	fsm.scm.puml
+	fsm.puml
 
 GOBJECTS = $(SOURCES:%.scm=%.go)
 
 moddir=$(guilesitedir)/ini/
-nobase_dist_mod_DATA = $(SOURCES)
+nobase_dist_mod_DATA = $(SOURCES) fsm.puml
 
 ccachedir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache
-nobase_nodist_ccache_DATA = $(GOBJECTS) fsm.scm
+nobase_nodist_ccache_DATA = $(GOBJECTS)
 
 # Make sure source files are installed first, so that the mtime of
 # installed compiled files is greater than that of installed source
