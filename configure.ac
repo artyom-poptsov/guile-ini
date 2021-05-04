@@ -47,9 +47,10 @@ GUILE_PKG([3.0 2.2])
 GUILE_PROGS
 GUILE_SITE_DIR
 
-pkgdatadir="$datadir/$PACKAGE"
+GUILE_MODULE_REQUIRED([smc fsm])
+
 if test "x$guilesitedir" = "x"; then
-   guilesitedir="$pkgdatadir"
+   guilesitedir="$datadir/guile/site/$GUILE_EFFECTIVE_VERSION"
 fi
 AC_SUBST([guilesitedir])
 
