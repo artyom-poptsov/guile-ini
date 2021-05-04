@@ -24,7 +24,7 @@
             (begin
               (when debug-mode?
                 (pretty-print (fsm-statistics fsm) (current-error-port)))
-              (ini-context-result new-context)))))))
+              (reverse (ini-context-result new-context))))))))
 
 
 
