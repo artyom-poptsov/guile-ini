@@ -17,13 +17,11 @@ read_property_key -> read_property_key: guard:#t -> action:store
 
 trim_property_key: Skip all trailing spaces after the key.
 trim_property_key ---> [*]: guard:eof-object? -> action:syntax-error
-trim_property_key ---> [*]: guard:letter? -> action:syntax-error
 trim_property_key --> trim_property_value: guard:equals-sign? -> action:update-stanza
 trim_property_key -> trim_property_key
 
 trim_property_value: Trim spaces around a global property value.
 trim_property_value ---> [*]: guard:eof-object? -> action:syntax-error
-trim_property_value ---> [*]: guard:letter? -> action:syntax-error
 trim_property_value --> read_property_value: guard:letter? -> action:store
 trim_property_value -> trim_property_value
 
