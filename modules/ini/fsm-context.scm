@@ -13,7 +13,7 @@
             action:append-comment))
 
 (define-class <ini-context> (<context>)
-  (skip-comments?
+  (read-comments?
    #:init-keyword #:read-comments?
    #:init-value   #t
    #:getter       ini-context-read-comments?)
