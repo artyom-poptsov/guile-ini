@@ -31,7 +31,7 @@
 
 (define (%default-comment-writer comment port)
   "This writer adds '; ' before a COMMENT and writes it to a PORT."
-  (format port "; ~a" comment))
+  (format port "; ~a~%" comment))
 
 (define (%write-section section port comment-writer)
   (let ((title (car section))
