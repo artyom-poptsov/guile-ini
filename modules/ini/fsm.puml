@@ -3,7 +3,8 @@
 
 read: The entry point
 read ---> [*]: guard:eof-object?
-read --> skip_global_comment: guard:semicolon?
+read --> read_global_comment: guard:comment/read?
+read --> skip_global_comment: guard:comment?
 read --> read_section_title: guard:left-square-bracket?
 read --> read_property_key: guard:letter? -> action:store
 read -> read
@@ -34,6 +35,11 @@ skip_global_comment: Skip a comment that is placed upon all the sections
 skip_global_comment --> read: guard:newline?
 skip_global_comment -> skip_global_comment
 
+read_global_comment: Read a global comment and store it.
+read_global_comment ---> [*]: guard:eof-object? -> action:append-comment
+read_global_comment --> read: guard:newline? -> action:append-comment
+read_global_comment --> read_global_comment: guard:#t -> action:store
+
 read_section_title: Read and store a section title
 read_section_title --> [*]: guard:eof-object?
 read_section_title --> read_section_content: guard:right-square-bracket? -> action:start-section
@@ -41,7 +47,8 @@ read_section_title --> read_section_title: guard:#t -> action:store
 
 read_section_content: Read properties written in a section.
 read_section_content ---> [*]: guard:eof-object?
-read_section_content --> skip_comment: guard:semicolon?
+read_section_content --> read_comment: guard:comment/read?
+read_section_content --> skip_comment: guard:comment?
 read_section_content --> read_section_property_key: guard:letter? -> action:store
 read_section_content --> read_section_title: guard:left-square-bracket?
 read_section_content -> read_section_content
@@ -50,6 +57,11 @@ skip_comment: Skip a comment inside a section.
 skip_comment --> [*]: guard:eof-object?
 skip_comment --> read_section_content: guard:newline?
 skip_comment -> skip_comment
+
+read_comment: Read a comment and store it.
+read_comment ---> [*]: guard:eof-object? -> action:append-comment
+read_comment --> read_section_content: guard:newline? -> action:append-comment
+read_comment -> read_comment: guard:#t -> action:store
 
 read_section_property_key: Read a section property key.
 read_section_property_key ---> [*]: guard:eof-object? -> action:syntax-error

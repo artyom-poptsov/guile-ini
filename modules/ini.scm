@@ -11,10 +11,14 @@
             scm->ini
             %default-comment-writer))
 
-(define* (ini->scm port #:key (debug-mode? #f))
+(define* (ini->scm port
+                   #:key
+                   (read-comments? #t)
+                   (debug-mode? #f))
   (let ((fsm (make <ini-fsm>)))
     (fsm-debug-mode-set! fsm debug-mode?)
     (let loop ((context (make <ini-context>
+                          #:read-comments? read-comments?
                           #:module (list (resolve-module '(smc guards char))
                                          (resolve-module '(smc puml))
                                          (resolve-module '(smc fsm))))))
