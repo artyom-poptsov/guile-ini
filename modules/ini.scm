@@ -38,7 +38,7 @@
               props))
   (newline port))
 
-(define (scm->ini data port)
+(define* (scm->ini data #:key (port (current-output-port)))
   "Write DATA to a PORT in the INI format. "
   (let* ((global (find (lambda (section)
                          (not (car section)))
