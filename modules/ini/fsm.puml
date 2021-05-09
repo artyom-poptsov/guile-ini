@@ -41,7 +41,8 @@ read_global_comment --> read: guard:newline? -> action:append-comment
 read_global_comment --> read_global_comment: guard:#t -> action:store
 
 read_section_title: Read and store a section title
-read_section_title --> [*]: guard:eof-object?
+read_section_title ---> [*]: guard:eof-object? -> action:syntax-error
+read_section_title ---> [*]: guard:newline? -> action:syntax-error
 read_section_title --> read_section_content: guard:right-square-bracket? -> action:start-section
 read_section_title --> read_section_title: guard:#t -> action:store
 
