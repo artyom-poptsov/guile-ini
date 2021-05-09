@@ -22,14 +22,16 @@
                           #:module (list (resolve-module '(smc guards char))
                                          (resolve-module '(smc puml))
                                          (resolve-module '(smc fsm))))))
-      (receive (new-state new-context)
-          (fsm-run! fsm (get-char port) context)
-        (if new-state
-            (loop new-context)
-            (begin
-              (when debug-mode?
-                (pretty-print (fsm-statistics fsm) (current-error-port)))
-              (reverse (ini-context-result new-context))))))))
+      (let ((ch (get-char port)))
+        (char-context-update-counters! context ch)
+        (receive (new-state new-context)
+            (fsm-run! fsm ch context)
+          (if new-state
+              (loop new-context)
+              (begin
+                (when debug-mode?
+                  (pretty-print (fsm-statistics fsm) (current-error-port)))
+                (reverse (ini-context-result new-context)))))))))
 
 
 

@@ -1,18 +1,18 @@
 (define-module (ini fsm-context)
   #:use-module (oop goops)
   #:use-module (smc core stack)
-  #:use-module (smc core context)
+  #:use-module (smc context char-context)
+  #:re-export (char-context-update-counters!)
   #:export (<ini-context>
             ini-context-result
             stanza->list-of-strings
             guard:comment/read?
             guard:comment?
-            action:syntax-error
             action:start-section
             action:append-property
             action:append-comment))
 
-(define-class <ini-context> (<context>)
+(define-class <ini-context> (<char-context>)
   (read-comments?
    #:init-keyword #:read-comments?
    #:init-value   #t
@@ -43,9 +43,6 @@
        (ini-context-read-comments? ctx)))
 
 
-
-(define (action:syntax-error ch ctx)
-  (error "Syntax error" ch ctx))
 
 (define (action:start-section ch ctx)
   (let ((title (buffer->string (context-buffer ctx))))
