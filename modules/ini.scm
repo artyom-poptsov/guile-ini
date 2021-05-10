@@ -1,3 +1,29 @@
+;;; ini.scm -- Guile INI format parser.  The main module.
+
+;; Copyright (C) 2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; The program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with the program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+;;; Commentary:
+
+;; This module contains procedures to read data in INI format to scheme
+;; representation and vice versa.
+
+
+;;; Code:
+
 (define-module (ini)
   #:use-module (ice-9 receive)
   #:use-module (ice-9 pretty-print)
@@ -15,6 +41,7 @@
                    #:key
                    (read-comments? #t)
                    (debug-mode? #f))
+  "Read INI data from a PORT and convert it to the scheme representation."
   (let ((fsm (make <ini-fsm>)))
     (fsm-debug-mode-set! fsm debug-mode?)
     (let loop ((context (make <ini-context>
@@ -40,6 +67,7 @@
   (format port "; ~a~%" comment))
 
 (define (%write-section section port comment-writer)
+  "Write a new INI section to the output port."
   (let ((title (car section))
         (props (cdr section)))
     (when title
@@ -75,3 +103,5 @@
     (for-each (lambda (section)
                 (%write-section section port comment-writer))
               data)))
+
+;;; ini.scm ends here.
