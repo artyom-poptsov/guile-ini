@@ -17,29 +17,14 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-INI.  If not, see <http://www.gnu.org/licenses/>.
 
-ACLOCAL_AMFLAGS = -I build-aux
+AUTOMAKE_OPTIONS = gnu
 
-SUBDIRS = build-aux modules doc
+info_TEXINFOS = guile-ini.texi
 
-EXTRA_DIST = \
-	.dir-locals.el
+guile_ini_TEXINFOS = \
+	intro.texi		\
+	installation.texi	\
+	indices.texi		\
+	fdl.texi
 
-gen-ChangeLog:
-	if test -d .git; then				\
-	  $(top_srcdir)/build-aux/gitlog-to-changelog	\
-	    2bea8c70..HEAD > $(distdir)/cl-t;		\
-	  rm -f $(distdir)/ChangeLog;			\
-	  mv $(distdir)/cl-t $(distdir)/ChangeLog;	\
-	fi
-
-dist-hook: gen-ChangeLog
-.PHONY: gen-ChangeLog
-
-clean-go:
-	-$(RM) $(GOBJECTS)
-.PHONY: clean-go
-
-CLEANFILES = \
-	$(GOBJECTS)
-
-# Makefile.am ends here
+## Makefile.am ends here

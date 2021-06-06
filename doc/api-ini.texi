@@ -1,0 +1,38 @@
+@c -*-texinfo-*-
+@c This file is part of Guile-INI Reference Manual.
+@c Copyright (C) 2021 Artyom V. Poptsov
+@c See the file guile-ini.texi for copying conditions.
+
+@node INI
+@section INI
+
+This module contains procedures that allow to read and write data in INI
+format.
+
+@deffn {Scheme Procedure} ini->scm @
+               port @
+               [#:read-comments?=#t] @
+               [#:debug-mode?=#f]
+
+Read INI data from a @var{port} and convert it to the Scheme representation.
+
+@end deffn
+
+@deffn {Scheme Procedure} scm->ini @
+               data @
+               [#:port=(current-output-port)] @
+               [#:comment-writer=%default-comment-writer]
+
+Write @var{data} to a @var{port} in the INI format.
+
+@end deffn
+
+@subsection Low-level API
+
+@deffn {Scheme Procedure} %default-comment-writer comment port
+This writer adds ``; `` before a @var{comment} and writes it to a @var{port}.
+@end deffn
+
+@c Local Variables:
+@c TeX-master: "guile-ini.texi"
+@c End:

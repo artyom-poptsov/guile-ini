@@ -61,6 +61,7 @@ AC_CONFIG_FILES([
         build-aux/m4/Makefile
         modules/ini/Makefile
         modules/Makefile
+        doc/Makefile
 ])
 
 dnl texinfo package required to make the documentation in Texinfo format.
