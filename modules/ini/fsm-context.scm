@@ -31,6 +31,7 @@
   #:re-export (char-context-update-counters!)
   #:export (<ini-context>
             ini-context-result
+            buffer->string
             stanza->list-of-strings
             guard:comment/read?
             guard:comment?
