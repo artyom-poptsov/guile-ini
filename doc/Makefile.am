@@ -22,9 +22,12 @@ AUTOMAKE_OPTIONS = gnu
 info_TEXINFOS = guile-ini.texi
 
 guile_ini_TEXINFOS = \
-	intro.texi		\
-	installation.texi	\
-	indices.texi		\
+	intro.texi		 \
+	installation.texi	 \
+	api-ini.texi		 \
+	api-ini-fsm.texi	 \
+	api-ini-fsm-context.texi \
+	indices.texi		 \
 	fdl.texi
 
 ## Makefile.am ends here
