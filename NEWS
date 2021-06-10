@@ -7,6 +7,28 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Unreleased
+** Update to use the new Guile-SMC 0.2.0 API
+** Fix default =guilesitedir= and =ccachedir=
+   Guile-INI now uses correct values for these variables.
+
+   Thanks to Aleix Conchillo Flaqué
+** Check for Guile-SMC
+   Guile-INI now checks for Guile-SMC when built.
+
+   Thanks to Aleix Conchillo Flaqué
+** Validate the finite state machine
+   The FSM in PlantUML format now being validated during compilation.
+** Changes in =ini->scm=
+   - Allow to read and store comments.
+** Changes in =scm->ini=
+   - The procedure now accepts the "port" parameter as a keyword.
+   - Allow to write comments
+** Changes in the =fsm.puml= file
+   - Bugfix: =trim_property_key= and =trim_property_value= states now do not
+     issue a syntax error when a letter is found.
+   - =read_section_title=: Issue syntax errors when an EOF object or a newline
+     found.
 * Version 0.1.0 (2021-05-02)
   The first release of Guile-INI.
 
