@@ -2,7 +2,8 @@
              (srfi srfi-26)
              (oop goops)
              (ini fsm-context)
-             (smc core stack))
+             (smc core stack)
+             (smc context char-context))
 
 (define %test-name "fsm-context")
 
@@ -36,6 +37,16 @@
 (test-assert "guard:comment/read?: #f"
   (let ((ctx (make <ini-context> #:read-comments? #f)))
     (guard:comment? #\; ctx)))
+
+(test-equal "action:start-section"
+  '(("test"))
+  (let ((ctx (make <ini-context>)))
+    (action:store #\t ctx)
+    (action:store #\e ctx)
+    (action:store #\s ctx)
+    (action:store #\t ctx)
+    (action:start-section #\nul ctx)
+    (ini-context-result ctx)))
 
 
 (define exit-status (test-runner-fail-count (test-runner-current)))
