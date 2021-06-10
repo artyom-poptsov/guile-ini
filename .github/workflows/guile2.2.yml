@@ -26,7 +26,7 @@ jobs:
           git clone https://github.com/artyom-poptsov/guile-smc
           cd guile-smc
           autoreconf -vif
-          ./configure
+          ./configure --with-guilesitedir=/usr/share/guile/site/2.2
           sudo make -j2 install
 
       - name: Checkout repository 
