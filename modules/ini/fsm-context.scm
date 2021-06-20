@@ -69,18 +69,18 @@
 
 
 
-(define (guard:comment? ch ctx)
+(define (guard:comment? ctx ch)
   "Check if a character CH is a comment symbol."
   (char=? ch #\;))
 
-(define (guard:comment/read? ch ctx)
+(define (guard:comment/read? ctx ch)
   "Check if a character CH is a comment symbol and we must read the comment."
   (and (char=? ch #\;)
        (ini-context-read-comments? ctx)))
 
 
 
-(define (action:start-section ch ctx)
+(define (action:start-section ctx ch)
   "Start a new section."
   (let ((title (buffer->string (context-buffer ctx))))
     (ini-context-result-set! ctx (cons (list title)
@@ -88,7 +88,7 @@
     (context-buffer-clear! ctx)
     ctx))
 
-(define (action:append-property ch ctx)
+(define (action:append-property ctx ch)
   "Append a new property to the parsing result."
   (let ((stanza (stanza->list-of-strings (context-stanza ctx)))
         (buffer (context-buffer ctx))
@@ -107,7 +107,7 @@
     (context-stanza-clear! ctx)
     ctx))
 
-(define (action:append-comment ch ctx)
+(define (action:append-comment ctx ch)
   "Append a commentary to the result of parsing."
   (let ((buffer (context-buffer ctx))
         (result (ini-context-result ctx)))
