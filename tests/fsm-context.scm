@@ -28,24 +28,24 @@
     (buffer->string stack)))
 
 (test-assert "guard:comment?"
-  (guard:comment? #\; '()))
+  (guard:comment? '() #\;))
 
 (test-assert "guard:comment/read?: #t"
   (let ((ctx (make <ini-context> #:read-comments? #t)))
-    (guard:comment? #\; ctx)))
+    (guard:comment? ctx #\;)))
 
 (test-assert "guard:comment/read?: #f"
   (let ((ctx (make <ini-context> #:read-comments? #f)))
-    (guard:comment? #\; ctx)))
+    (guard:comment? ctx #\;)))
 
 (test-equal "action:start-section"
   '(("test"))
   (let ((ctx (make <ini-context>)))
-    (action:store #\t ctx)
-    (action:store #\e ctx)
-    (action:store #\s ctx)
-    (action:store #\t ctx)
-    (action:start-section #\nul ctx)
+    (action:store ctx #\t)
+    (action:store ctx #\e)
+    (action:store ctx #\s)
+    (action:store ctx #\t)
+    (action:start-section ctx #\nul)
     (ini-context-result ctx)))
 
 
