@@ -38,6 +38,9 @@ jobs:
       - name: Configure
         run: ./configure
 
+      - name: Build
+        run: make
+
       - name: Run tests
         run: make check
 
