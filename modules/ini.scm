@@ -44,21 +44,20 @@
   "Read INI data from a PORT and convert it to the scheme representation."
   (let ((fsm (make <ini-fsm>)))
     (fsm-debug-mode-set! fsm debug-mode?)
-    (let loop ((context (make <ini-context>
-                          #:read-comments? read-comments?
-                          #:module (list (resolve-module '(smc guards char))
-                                         (resolve-module '(smc puml))
-                                         (resolve-module '(smc fsm))))))
-      (let ((ch (get-char port)))
-        (char-context-update-counters! context ch)
-        (receive (new-state new-context)
-            (fsm-run! fsm ch context)
-          (if new-state
-              (loop new-context)
-              (begin
-                (when debug-mode?
-                  (pretty-print (fsm-statistics fsm) (current-error-port)))
-                (reverse (ini-context-result new-context)))))))))
+    (let* ((context (make <ini-context>
+                      #:read-comments? read-comments?
+                      #:module (list (resolve-module '(smc guards char))
+                                     (resolve-module '(smc puml))
+                                     (resolve-module '(smc fsm)))))
+           (new-context (fsm-run! fsm
+                                  (lambda (context)
+                                    (let ((ch (get-char port)))
+                                      (char-context-update-counters! context ch)
+                                      ch))
+                                  context)))
+      (when debug-mode?
+        (pretty-print (fsm-statistics fsm) (current-error-port)))
+      (reverse (ini-context-result new-context)))))
 
 
 
