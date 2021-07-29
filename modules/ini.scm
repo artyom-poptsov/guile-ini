@@ -37,6 +37,7 @@
             scm->ini
             %default-comment-writer))
 
+
 (define* (ini->scm port
                    #:key
                    (read-comments? #t)
@@ -44,16 +45,12 @@
   "Read INI data from a PORT and convert it to the scheme representation."
   (let ((fsm (make <ini-fsm>)))
     (fsm-debug-mode-set! fsm debug-mode?)
-    (let* ((context (make <ini-context>
-                      #:port           port
-                      #:read-comments? read-comments?
-                      #:module (list (resolve-module '(smc guards char))
-                                     (resolve-module '(smc puml))
-                                     (resolve-module '(smc fsm)))))
-           (new-context (fsm-run! fsm context)))
+    (let ((context (fsm-run! fsm (make <ini-context>
+                                   #:port           port
+                                   #:read-comments? read-comments?))))
       (when debug-mode?
         (pretty-print (fsm-statistics fsm) (current-error-port)))
-      (reverse (ini-context-result new-context)))))
+      (reverse (ini-context-result context)))))
 
 
 
