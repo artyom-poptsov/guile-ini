@@ -45,16 +45,12 @@
   (let ((fsm (make <ini-fsm>)))
     (fsm-debug-mode-set! fsm debug-mode?)
     (let* ((context (make <ini-context>
+                      #:port           port
                       #:read-comments? read-comments?
                       #:module (list (resolve-module '(smc guards char))
                                      (resolve-module '(smc puml))
                                      (resolve-module '(smc fsm)))))
-           (new-context (fsm-run! fsm
-                                  (lambda (context)
-                                    (let ((ch (get-char port)))
-                                      (char-context-update-counters! context ch)
-                                      ch))
-                                  context)))
+           (new-context (fsm-run! fsm context)))
       (when debug-mode?
         (pretty-print (fsm-statistics fsm) (current-error-port)))
       (reverse (ini-context-result new-context)))))
