@@ -18,7 +18,8 @@
 ## along with Guile-INI.  If not, see <http://www.gnu.org/licenses/>.
 
 SCM_TESTS = \
-	fsm-context.scm
+	fsm-context.scm		\
+	ini.scm
 
 TESTS = ${SCM_TESTS}
 
