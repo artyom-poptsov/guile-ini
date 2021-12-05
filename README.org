@@ -11,8 +11,9 @@
     Public License.
 
 ** Requirements
-   - [[https://www.gnu.org/software/guile/][GNU Guile]] 2.2+
-   - [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]] 0.2.0+
+    - [[https://www.gnu.org/software/guile/][GNU Guile]] 2.2+
+    - [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]] 0.3.0
+    - [[https://www.nongnu.org/guile-lib/][Guile Library]]
 
 ** Usage
    This program reads an INI data from the standard input, converts it to a
