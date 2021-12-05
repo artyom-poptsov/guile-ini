@@ -25,6 +25,7 @@
 ;;; Code:
 
 (define-module (ini fsm-context)
+  #:use-module (scheme documentation)
   #:use-module (oop goops)
   #:use-module (smc core stack)
   #:use-module (smc context char-context)
@@ -39,7 +40,9 @@
             action:append-property
             action:append-comment))
 
-(define-class <ini-context> (<char-context>)
+(define-class-with-docs <ini-context> (<char-context>)
+  "This class describes a context for INI parser finite-state machine."
+
   ;; Whether the parser should read the comments or skip them.
   ;;
   ;; <boolean>
