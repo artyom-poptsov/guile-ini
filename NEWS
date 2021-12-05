@@ -7,6 +7,10 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.3.0 (2021-12-05)
+** Update to use the new Guile-SMC 0.3.0 API
+** Guile-INI now requires Guile Library
+** Add new tests.
 * Version 0.2.0 (2021-06-10)
 ** Update to use the new Guile-SMC 0.2.0 API
 ** Fix default =guilesitedir= and =ccachedir=

@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Guile-INI.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-INI], [0.2.0], [poptsov.artyom@gmail.com],
+AC_INIT([Guile-INI], [0.3.0], [poptsov.artyom@gmail.com],
                      [guile-ini],
                      [https://github.com/artyom-poptsov/guile-ini])
 
