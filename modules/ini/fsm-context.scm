@@ -61,14 +61,14 @@
 
 
 
-(define-method (stanza->list-of-strings (stanza <stack>))
+(define-method (stanza->list-of-strings (stanza <list>))
   (map (lambda (elem)
          (list->string elem))
-       (stack-content/reversed stanza)))
+       (reverse stanza)))
 
-(define-method (buffer->string (buffer <stack>))
+(define-method (buffer->string (buffer <list>))
   "Convert a BUFFER to a string."
-  (list->string (stack-content/reversed buffer)))
+  (list->string (reverse buffer)))
 
 
 

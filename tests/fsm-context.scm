@@ -12,20 +12,14 @@
 
 (test-equal "stanza->list-of-strings"
   '("hello" "world")
-  (let ((stack (make <stack>)))
-    (stack-push! stack '(#\h #\e #\l #\l #\o))
-    (stack-push! stack '(#\w #\o #\r #\l #\d))
-    (stanza->list-of-strings stack)))
+  (let ((stanza (cons '(#\w #\o #\r #\l #\d)
+                      (cons '(#\h #\e #\l #\l #\o) '()))))
+    (stanza->list-of-strings stanza)))
 
 (test-equal "buffer->string"
   "hello"
-  (let ((stack (make <stack>)))
-    (stack-push! stack #\h)
-    (stack-push! stack #\e)
-    (stack-push! stack #\l)
-    (stack-push! stack #\l)
-    (stack-push! stack #\o)
-    (buffer->string stack)))
+  (let ((buffer '(#\o #\l #\l #\e #\h)))
+    (buffer->string buffer)))
 
 (test-assert "guard:comment?"
   (guard:comment? '() #\;))
