@@ -20,7 +20,8 @@ jobs:
               guile-2.2 \
               guile-2.2-dev \
               guile-library \
-              texinfo
+              texinfo \
+              help2man
 
       - name: Install Guile-SMC
         run: |
