@@ -7,6 +7,10 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.4.0 (2022-03-13)
+** Update to use the new Guile-SMC 0.4.0 API
+** Add =guix.scm= to the repository
+   The file contains GNU Guix package recipe.
 * Version 0.3.0 (2021-12-05)
 ** Update to use the new Guile-SMC 0.3.0 API
 ** Guile-INI now requires Guile Library

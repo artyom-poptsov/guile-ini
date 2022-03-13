@@ -3,7 +3,7 @@ dnl   Process this file with autoconf to produce configure.
 dnl
 
 define(GUILE_INI_CONFIGURE_COPYRIGHT, [[
-Copyright (C) 2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+Copyright (C) 2021-2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 
 This file is part of Guile-INI.
 
@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Guile-INI.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-INI], [0.3.0], [poptsov.artyom@gmail.com],
+AC_INIT([Guile-INI], [0.4.0], [poptsov.artyom@gmail.com],
                      [guile-ini],
                      [https://github.com/artyom-poptsov/guile-ini])
 
