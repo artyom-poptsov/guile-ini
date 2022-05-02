@@ -1,6 +1,6 @@
 ## Makefile.am -- Config file for GNU Automake.
 ##
-## Copyright (C) 2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2021-2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-INI.
 ##
@@ -34,7 +34,12 @@ SUFFIXES = .puml
 
 .puml.scm:
 	@echo "  SMC      $<"
-	@cat fsm.puml | smc compile -L $(top_srcdir)/modules -U "((ini fsm-context) (smc context char-context))" --fsm-name ini-fsm --fsm-module "(ini fsm)" --validate > fsm.scm
+	@smc compile \
+		-L $(top_srcdir)/modules \
+		-U "((ini fsm-context) (smc context char-context))" \
+		--fsm-name ini-fsm \
+		--fsm-module "(ini fsm)" \
+		--validate fsm.puml > fsm.scm
 
 CLEANFILES += \
 	fsm.scm
