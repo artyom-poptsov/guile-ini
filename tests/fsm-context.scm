@@ -1,9 +1,8 @@
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (oop goops)
-             (ini fsm-context)
-             (smc core stack)
-             (smc context char-context))
+             (ini fsm-context-ini)
+             (ini fsm-context))
 
 (define %test-name "fsm-context")
 

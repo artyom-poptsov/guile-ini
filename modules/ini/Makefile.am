@@ -20,10 +20,12 @@
 include $(top_srcdir)/build-aux/am/guile.am
 
 SOURCES = \
+	fsm-context.scm \
 	fsm.scm	\
-	fsm-context.scm
+	fsm-context-ini.scm
 
 EXTRA_DIST += \
+	fsm-context.scm \
 	fsm.scm	\
 	fsm.puml
 
@@ -32,16 +34,33 @@ godir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache/ini/
 
 SUFFIXES = .puml
 
-.puml.scm:
-	@echo "  SMC      $<"
-	@smc compile \
-		-L $(top_srcdir)/modules \
-		-U "((ini fsm-context) (smc context char-context))" \
-		--fsm-name ini-fsm \
-		--fsm-module "(ini fsm)" \
-		--validate fsm.puml > fsm.scm
+GUILE_SMC_CONTEXT_ARGS = \
+	-m "(ini fsm-context)"
+
+GUILE_SMC_ARGS = \
+	-L $(top_srcdir)/modules \
+	--fsm-name ini-fsm \
+	--fsm-module "(ini fsm)" \
+	-U "((ini fsm-context) (ini fsm-context-ini))" \
+	--validate
+
+if ENABLE_SMC_STANDALONE_MODE
+GUILE_SMC_CONTEXT_ARGS += \
+	--standalone
+GUILE_SMC_ARGS += \
+	--target=guile-standalone
+endif
+
+fsm-context.scm:
+	@echo "  SMC      $@"
+	@smc context $(GUILE_SMC_CONTEXT_ARGS) > $@
+
+fsm.scm: fsm-context.scm fsm.puml
+	@echo "  SMC      $@"
+	@smc compile $(GUILE_SMC_ARGS) fsm.puml > $@
 
 CLEANFILES += \
-	fsm.scm
+	fsm.scm	\
+	fsm-context.scm
 
 ### Makefile.am ends here.

@@ -30,9 +30,8 @@
   #:use-module (ice-9 textual-ports)
   #:use-module (srfi srfi-1)
   #:use-module (oop goops)
-  #:use-module (smc fsm)
   #:use-module (ini fsm)
-  #:use-module (ini fsm-context)
+  #:use-module (ini fsm-context-ini)
   #:export (ini->scm
             scm->ini
             %default-comment-writer))
@@ -43,8 +42,7 @@
                    (read-comments? #t)
                    (debug-mode? #f))
   "Read INI data from a PORT and convert it to the scheme representation."
-  (let ((fsm (make <ini-fsm>)))
-    (fsm-debug-mode-set! fsm debug-mode?)
+  (let ((fsm (make <ini-fsm> #:debug-mode? debug-mode?)))
     (let ((context (fsm-run! fsm (make <ini-context>
                                    #:port           port
                                    #:read-comments? read-comments?))))
