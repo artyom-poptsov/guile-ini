@@ -7,6 +7,11 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.5.0 (2022-08-23)
+** Update to use the new Guile-SMC 0.5.0 API
+** configure.ac: Accept '--enable-standalone' option
+This allows to enable "standalone" mode of FSM compilation that produce the
+code that does not depend on Guile-SMC in the target system.
 * Version 0.4.0 (2022-03-13)
 ** Update to use the new Guile-SMC 0.4.0 API
 ** Add =guix.scm= to the repository
