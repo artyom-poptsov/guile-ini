@@ -63,9 +63,9 @@
     (native-inputs
      (list autoconf automake pkg-config texinfo))
     (inputs
-     `(("bash" ,bash-minimal)
-       ("guile" ,guile-3.0)
-       ("guile-lib" ,guile-lib)))
+     (list bash-minimal
+           guile-3.0
+           guile-lib))
     (propagated-inputs
      (list guile-smc))
     (home-page "https://github.com/artyom-poptsov/guile-ini")
