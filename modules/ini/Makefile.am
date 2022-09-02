@@ -35,9 +35,11 @@ godir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache/ini/
 SUFFIXES = .puml
 
 GUILE_SMC_CONTEXT_ARGS = \
+	--log-driver null \
 	-m "(ini fsm-context)"
 
 GUILE_SMC_ARGS = \
+	--log-driver null \
 	-L $(top_srcdir)/modules \
 	--fsm-name ini-fsm \
 	--fsm-module "(ini fsm)" \
