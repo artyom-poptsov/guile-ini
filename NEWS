@@ -7,6 +7,13 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.5.1 (2022-09-02)
+** Update to use the new Guile-SMC logging subsystem
+Guile-SMC log driver for context generation and the FSM compilation is now set
+to "file".  The output log files are stored in the build directory.
+
+All Guile-SMC logs during tests are now written to the corresponding files in
+"tests".
 * Version 0.5.0 (2022-08-23)
 ** Update to use the new Guile-SMC 0.5.0 API
 ** configure.ac: Accept '--enable-standalone' option
