@@ -45,6 +45,7 @@
              (gnu packages guile-xyz)
              (gnu packages bash)
              (gnu packages pkg-config)
+             (gnu packages tex)
              (gnu packages texinfo))
 
 
@@ -61,7 +62,7 @@
     (arguments
      `(#:make-flags '("GUILE_AUTO_COMPILE=0")))     ;to prevent guild warnings
     (native-inputs
-     (list autoconf automake pkg-config texinfo))
+     (list autoconf automake pkg-config texinfo texlive))
     (inputs
      (list bash-minimal
            guile-3.0
