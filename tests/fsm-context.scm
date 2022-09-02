@@ -1,10 +1,15 @@
+(add-to-load-path (getenv "abs_top_srcdir"))
+
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (oop goops)
+             (tests common)
              (ini fsm-context-ini)
              (ini fsm-context))
 
 (define %test-name "fsm-context")
+
+(configure-test-logging! %test-name)
 
 
 (test-begin %test-name)

@@ -1,9 +1,14 @@
+(add-to-load-path (getenv "abs_top_srcdir"))
+
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (oop goops)
+             (tests common)
              (ini))
 
 (define %test-name "ini")
+
+(configure-test-logging! %test-name)
 
 
 (test-begin %test-name)
