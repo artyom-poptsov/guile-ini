@@ -20,12 +20,16 @@
 include $(top_srcdir)/build-aux/am/guile.am
 
 SOURCES = \
-	fsm-context.scm \
 	fsm.scm	\
 	fsm-context-ini.scm
 
+BUILT_SOURCES = \
+	fsm-context.scm
+
+INSTALL += \
+	fsm-context.scm
+
 EXTRA_DIST += \
-	fsm-context.scm \
 	fsm.scm	\
 	fsm.puml
 
