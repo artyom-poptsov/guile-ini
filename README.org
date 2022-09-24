@@ -1,5 +1,5 @@
 * Guile-INI
-  [[https://github.com/artyom-poptsov/guile-ini/actions/workflows/guile2.2.yml/badge.svg]]
+  [[https://github.com/artyom-poptsov/guile-ini/actions/workflows/guile2.2.yml/badge.svg]] [[https://github.com/artyom-poptsov/guile-ini/actions/workflows/guile3.0.yml/badge.svg]]
 
   A GNU Guile library for working with INI format.
 
