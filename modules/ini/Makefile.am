@@ -36,8 +36,6 @@ EXTRA_DIST += \
 moddir=$(prefix)/share/guile/site/$(GUILE_EFFECTIVE_VERSION)/ini/
 godir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache/ini/
 
-SUFFIXES = .puml
-
 GUILE_SMC_CONTEXT_ARGS = \
 	--log-driver file \
 	--log-opt "file=fsm-context.log" \
