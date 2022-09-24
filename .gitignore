@@ -20,5 +20,9 @@ autom4te.cache
 TAGS
 tags
 
+# Logs
+*.log
+*.log.*
+
 # Distributions
 guile-ini-*
