@@ -67,6 +67,11 @@ fsm.scm: fsm-context.scm fsm.puml
 	@echo "  SMC      $@"
 	@$(GUILE_SMC_ENV) smc compile $(GUILE_SMC_ARGS) fsm.puml > $@
 
+# XXX: Automake does not remove those files for some reason.
+uninstall-hook:
+	rm -f $(DESTDIR)$(datadir)/guile/site/$(GUILE_EFFECTIVE_VERSION)/ini/fsm-context.scm \
+		$(DESTDIR)$(libdir)/guile/3.0/site-ccache/ini/fsm-context.scm
+
 CLEANFILES += \
 	fsm.scm	\
 	fsm.log	\
