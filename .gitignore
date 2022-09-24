@@ -19,3 +19,6 @@ autom4te.cache
 
 TAGS
 tags
+
+# Distributions
+guile-ini-*
