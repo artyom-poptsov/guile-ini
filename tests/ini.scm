@@ -46,7 +46,20 @@ file=\"payroll.dat\"
         (and (equal? (caar global) 'comment)
              (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
 
-(test-assert "scm->ini"
+(test-equal "scm->ini"
+  ;; TODO: Fix the INI generator as currently it adds extra newlines and
+  ;;       spaces.
+  (string-append
+   ";  last modified 1 April 2001 by John Doe\n\n"
+   "[owner]\n"
+   "name=John Doe\n"
+   "organization=Acme Widgets Inc.\n\n"
+   "[database]\n"
+   ";  use IP address in case network name resolution is not working\n"
+   "server=192.0.2.62\n"
+   "port=143\n"
+   "file=\"payroll.dat\"\n"
+   "\n")
   (with-input-from-string
       %test-ini
     (lambda ()
