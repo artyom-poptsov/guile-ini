@@ -46,7 +46,7 @@ GUILE_SMC_CONTEXT_ARGS = \
 GUILE_SMC_ARGS = \
 	--log-driver file \
 	--log-opt "file=fsm.log" \
-	-L $(top_srcdir)/modules \
+	-L $(abs_top_srcdir)/modules:$(abs_top_builddir)/modules \
 	--fsm-name ini-fsm \
 	--fsm-module "(ini fsm)" \
 	-U "((ini fsm-context) (ini fsm-context-ini))" \
