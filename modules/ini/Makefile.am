@@ -52,6 +52,8 @@ GUILE_SMC_ARGS = \
 	-U "((ini fsm-context) (ini fsm-context-ini))" \
 	--validate
 
+GUILE_SMC_ENV = GUILE_AUTO_COMPILE=0
+
 if ENABLE_SMC_STANDALONE_MODE
 GUILE_SMC_CONTEXT_ARGS += \
 	--standalone
@@ -61,11 +63,11 @@ endif
 
 fsm-context.scm:
 	@echo "  SMC      $@"
-	@smc context $(GUILE_SMC_CONTEXT_ARGS) > $@
+	@$(GUILE_SMC_ENV) smc context $(GUILE_SMC_CONTEXT_ARGS) > $@
 
 fsm.scm: fsm-context.scm fsm.puml
 	@echo "  SMC      $@"
-	@smc compile $(GUILE_SMC_ARGS) fsm.puml > $@
+	@$(GUILE_SMC_ENV) smc compile $(GUILE_SMC_ARGS) fsm.puml > $@
 
 CLEANFILES += \
 	fsm.scm	\
