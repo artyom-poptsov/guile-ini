@@ -7,6 +7,18 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.5.2 (2022-09-24)
+** =ini->scm=: Fix the debug mode
+Load =fsm-statistics= procedure from =(smc fsm)= module when debug mode is
+enabled.
+** Fix build order
+Now Guile-SMC intermediate context is generated before the files that depend
+on it.
+
+Reported by Aleix Conchillo Flaqué here:
+<https://github.com/artyom-poptsov/guile-ini/pull/3>
+** Fix =make distcheck=
+Guile-INI now successfully builds with =make distcheck=.
 * Version 0.5.1 (2022-09-02)
 ** Update to use the new Guile-SMC logging subsystem
 Guile-SMC log driver for context generation and the FSM compilation is now set
