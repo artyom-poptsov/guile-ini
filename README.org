@@ -12,7 +12,7 @@
 
 ** Requirements
     - [[https://www.gnu.org/software/guile/][GNU Guile]] 2.2+
-    - [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]] 0.5.0
+    - [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]] 0.5.0+
     - [[https://www.nongnu.org/guile-lib/][Guile Library]]
 
 ** Usage
