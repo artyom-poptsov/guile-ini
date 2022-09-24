@@ -69,6 +69,8 @@ fsm.scm: fsm-context.scm fsm.puml
 
 CLEANFILES += \
 	fsm.scm	\
-	fsm-context.scm
+	fsm.log	\
+	fsm-context.scm	\
+	fsm-context.log
 
 ### Makefile.am ends here.
