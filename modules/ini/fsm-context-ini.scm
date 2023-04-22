@@ -31,7 +31,6 @@
   #:export (<ini-context>
             stanza->list-of-strings
             guard:comment/read?
-            guard:comment?
             action:start-section
             action:append-property
             action:append-comment))
@@ -55,10 +54,6 @@
        (reverse stanza)))
 
 
-
-(define (guard:comment? ctx ch)
-  "Check if a character CH is a comment symbol."
-  (char=? ch #\;))
 
 (define (guard:comment/read? ctx ch)
   "Check if a character CH is a comment symbol and we must read the comment."

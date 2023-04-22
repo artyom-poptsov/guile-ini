@@ -4,7 +4,7 @@
 read: The entry point
 read ---> [*]: char:eof-object?
 read --> read_global_comment: guard:comment/read?
-read --> skip_global_comment: guard:comment?
+read --> skip_global_comment: char:semicolon?
 read --> read_section_title: char:left-square-bracket?
 read --> read_property_key: char:letter? -> push-event-to-buffer
 read -> read
@@ -49,7 +49,7 @@ read_section_title --> read_section_title: guard:#t -> push-event-to-buffer
 read_section_content: Read properties written in a section.
 read_section_content ---> [*]: char:eof-object?
 read_section_content --> read_comment: guard:comment/read?
-read_section_content --> skip_comment: guard:comment?
+read_section_content --> skip_comment: char:semicolon?
 read_section_content --> read_section_property_key: char:letter? -> push-event-to-buffer
 read_section_content --> read_section_title: char:left-square-bracket?
 read_section_content -> read_section_content

@@ -20,16 +20,15 @@
                       (cons '(#\h #\e #\l #\l #\o) '()))))
     (stanza->list-of-strings stanza)))
 
-(test-assert "guard:comment?"
-  (guard:comment? '() #\;))
-
-(test-assert "guard:comment/read?: #t"
+(test-equal "guard:comment/read?: #t"
+  #t
   (let ((ctx (make <ini-context> #:read-comments? #t)))
-    (guard:comment? ctx #\;)))
+    (guard:comment/read? ctx #\;)))
 
-(test-assert "guard:comment/read?: #f"
+(test-equal "guard:comment/read?: #f"
+  #f
   (let ((ctx (make <ini-context> #:read-comments? #f)))
-    (guard:comment? ctx #\;)))
+    (guard:comment/read? ctx #\;)))
 
 (test-equal "action:start-section"
   '(("test"))
