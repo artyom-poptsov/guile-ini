@@ -30,7 +30,7 @@
   #:use-module (ini fsm-context)
   #:export (<ini-context>
             stanza->list-of-strings
-            guard:comment/read?
+            ini:comment/read?
             action:start-section
             action:append-property
             action:append-comment))
@@ -55,7 +55,7 @@
 
 
 
-(define (guard:comment/read? ctx ch)
+(define (ini:comment/read? ctx ch)
   "Check if a character CH is a comment symbol and we must read the comment."
   (and (char=? ch #\;)
        (ini-context-read-comments? ctx)))

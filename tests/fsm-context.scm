@@ -23,12 +23,12 @@
 (test-equal "guard:comment/read?: #t"
   #t
   (let ((ctx (make <ini-context> #:read-comments? #t)))
-    (guard:comment/read? ctx #\;)))
+    (ini:comment/read? ctx #\;)))
 
 (test-equal "guard:comment/read?: #f"
   #f
   (let ((ctx (make <ini-context> #:read-comments? #f)))
-    (guard:comment/read? ctx #\;)))
+    (ini:comment/read? ctx #\;)))
 
 (test-equal "action:start-section"
   '(("test"))
