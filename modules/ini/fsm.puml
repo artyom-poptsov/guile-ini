@@ -2,89 +2,89 @@
 [*] --> read
 
 read: The entry point
-read ---> [*]: guard:eof-object?
+read ---> [*]: char:eof-object?
 read --> read_global_comment: guard:comment/read?
 read --> skip_global_comment: guard:comment?
-read --> read_section_title: guard:left-square-bracket?
-read --> read_property_key: guard:letter? -> action:store
+read --> read_section_title: char:left-square-bracket?
+read --> read_property_key: char:letter? -> push-event-to-buffer
 read -> read
 
 read_property_key: Read a property key.
-read_property_key ---> [*]: guard:eof-object? -> action:syntax-error
-read_property_key ---> [*]: guard:newline? -> action:syntax-error
-read_property_key --> trim_property_key: guard:space?
-read_property_key --> trim_property_value: guard:equals-sign? -> action:update-stanza
-read_property_key -> read_property_key: guard:#t -> action:store
+read_property_key ---> [*]: char:eof-object? -> throw-syntax-error
+read_property_key ---> [*]: char:newline? -> throw-syntax-error
+read_property_key --> trim_property_key: char:space?
+read_property_key --> trim_property_value: char:equals-sign? -> push-buffer-to-stanza
+read_property_key -> read_property_key: guard:#t -> push-event-to-buffer
 
 trim_property_key: Skip all trailing spaces after the key.
-trim_property_key ---> [*]: guard:eof-object? -> action:syntax-error
-trim_property_key --> trim_property_value: guard:equals-sign? -> action:update-stanza
+trim_property_key ---> [*]: char:eof-object? -> throw-syntax-error
+trim_property_key --> trim_property_value: char:equals-sign? -> push-buffer-to-stanza
 trim_property_key -> trim_property_key
 
 trim_property_value: Trim spaces around a global property value.
-trim_property_value ---> [*]: guard:eof-object? -> action:syntax-error
-trim_property_value --> read_property_value: guard:letter? -> action:store
+trim_property_value ---> [*]: char:eof-object? -> throw-syntax-error
+trim_property_value --> read_property_value: char:letter? -> push-event-to-buffer
 trim_property_value -> trim_property_value
 
 read_property_value: Read a global property value.
-read_property_value ---> [*]: guard:eof-object? -> action:syntax-error
-read_property_value --> read: guard:newline? -> action:append-property
-read_property_value -> read_property_value: guard:#t -> action:store
+read_property_value ---> [*]: char:eof-object? -> throw-syntax-error
+read_property_value --> read: char:newline? -> action:append-property
+read_property_value -> read_property_value: guard:#t -> push-event-to-buffer
 
 skip_global_comment: Skip a comment that is placed upon all the sections
-skip_global_comment --> read: guard:newline?
+skip_global_comment --> read: char:newline?
 skip_global_comment -> skip_global_comment
 
 read_global_comment: Read a global comment and store it.
-read_global_comment ---> [*]: guard:eof-object? -> action:append-comment
-read_global_comment --> read: guard:newline? -> action:append-comment
-read_global_comment --> read_global_comment: guard:#t -> action:store
+read_global_comment ---> [*]: char:eof-object? -> action:append-comment
+read_global_comment --> read: char:newline? -> action:append-comment
+read_global_comment --> read_global_comment: guard:#t -> push-event-to-buffer
 
 read_section_title: Read and store a section title
-read_section_title ---> [*]: guard:eof-object? -> action:syntax-error
-read_section_title ---> [*]: guard:newline? -> action:syntax-error
-read_section_title --> read_section_content: guard:right-square-bracket? -> action:start-section
-read_section_title --> read_section_title: guard:#t -> action:store
+read_section_title ---> [*]: char:eof-object? -> throw-syntax-error
+read_section_title ---> [*]: char:newline? -> throw-syntax-error
+read_section_title --> read_section_content: char:right-square-bracket? -> action:start-section
+read_section_title --> read_section_title: guard:#t -> push-event-to-buffer
 
 read_section_content: Read properties written in a section.
-read_section_content ---> [*]: guard:eof-object?
+read_section_content ---> [*]: char:eof-object?
 read_section_content --> read_comment: guard:comment/read?
 read_section_content --> skip_comment: guard:comment?
-read_section_content --> read_section_property_key: guard:letter? -> action:store
-read_section_content --> read_section_title: guard:left-square-bracket?
+read_section_content --> read_section_property_key: char:letter? -> push-event-to-buffer
+read_section_content --> read_section_title: char:left-square-bracket?
 read_section_content -> read_section_content
 
 skip_comment: Skip a comment inside a section.
-skip_comment --> [*]: guard:eof-object?
-skip_comment --> read_section_content: guard:newline?
+skip_comment --> [*]: char:eof-object?
+skip_comment --> read_section_content: char:newline?
 skip_comment -> skip_comment
 
 read_comment: Read a comment and store it.
-read_comment ---> [*]: guard:eof-object? -> action:append-comment
-read_comment --> read_section_content: guard:newline? -> action:append-comment
-read_comment -> read_comment: guard:#t -> action:store
+read_comment ---> [*]: char:eof-object? -> action:append-comment
+read_comment --> read_section_content: char:newline? -> action:append-comment
+read_comment -> read_comment: guard:#t -> push-event-to-buffer
 
 read_section_property_key: Read a section property key.
-read_section_property_key ---> [*]: guard:eof-object? -> action:syntax-error
-read_section_property_key ---> [*]: guard:newline? -> action:syntax-error
-read_section_property_key --> trim_section_property_key: guard:space?
-read_section_property_key --> trim_section_property_value: guard:equals-sign? -> action:update-stanza
-read_section_property_key -> read_section_property_key: guard:#t -> action:store
+read_section_property_key ---> [*]: char:eof-object? -> throw-syntax-error
+read_section_property_key ---> [*]: char:newline? -> throw-syntax-error
+read_section_property_key --> trim_section_property_key: char:space?
+read_section_property_key --> trim_section_property_value: char:equals-sign? -> push-buffer-to-stanza
+read_section_property_key -> read_section_property_key: guard:#t -> push-event-to-buffer
 
 trim_section_property_key: Skip all trailing spaces after the key.
-trim_section_property_key ---> [*]: guard:eof-object? -> action:syntax-error
-trim_section_property_key ---> [*]: guard:letter? -> action:syntax-error
-trim_section_property_key --> trim_section_property_value: guard:equals-sign? -> action:update-stanza
+trim_section_property_key ---> [*]: char:eof-object? -> throw-syntax-error
+trim_section_property_key ---> [*]: char:letter? -> throw-syntax-error
+trim_section_property_key --> trim_section_property_value: char:equals-sign? -> push-buffer-to-stanza
 trim_section_property_key -> trim_section_property_key
 
 trim_section_property_value: Trim all the spaces before the section property value.
-trim_section_property_value ---> [*]: guard:eof-object? -> action:syntax-error
-trim_section_property_value --> trim_section_property_value: guard:space?
-trim_section_property_value --> read_section_property_value: guard:newline?
-trim_section_property_value --> read_section_property_value: guard:#t -> action:store
+trim_section_property_value ---> [*]: char:eof-object? -> throw-syntax-error
+trim_section_property_value --> trim_section_property_value: char:space?
+trim_section_property_value --> read_section_property_value: char:newline?
+trim_section_property_value --> read_section_property_value: guard:#t -> push-event-to-buffer
 
 read_section_property_value: Read the section property value.
-read_section_property_value ---> [*]: guard:eof-object?
-read_section_property_value --> read_section_content: guard:newline? -> action:append-property
-read_section_property_value -> read_section_property_value: guard:#t -> action:store
+read_section_property_value ---> [*]: char:eof-object?
+read_section_property_value --> read_section_content: char:newline? -> action:append-property
+read_section_property_value -> read_section_property_value: guard:#t -> push-event-to-buffer
 @enduml

@@ -1,6 +1,6 @@
 ;;; ini.scm -- Guile INI format parser.  The main module.
 
-;; Copyright (C) 2021-2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2021-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
   #:use-module (oop goops)
   #:use-module (ini fsm)
   #:use-module (ini fsm-context-ini)
+  #:use-module (ini fsm-context)
   #:export (ini->scm
             scm->ini
             %default-comment-writer))
@@ -49,7 +50,7 @@
       (when debug-mode?
         (pretty-print ((@ (smc fsm) fsm-statistics) fsm)
                       (current-error-port)))
-      (reverse (ini-context-result context)))))
+      (reverse (context-result context)))))
 
 
 

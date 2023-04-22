@@ -7,6 +7,8 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Unreleased
+** Update to work with the latest version of Guile-SMC
 * Version 0.5.2 (2022-09-24)
 ** =ini->scm=: Fix the debug mode
 Load =fsm-statistics= procedure from =(smc fsm)= module when debug mode is

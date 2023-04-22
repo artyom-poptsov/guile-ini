@@ -20,11 +20,6 @@
                       (cons '(#\h #\e #\l #\l #\o) '()))))
     (stanza->list-of-strings stanza)))
 
-(test-equal "buffer->string"
-  "hello"
-  (let ((buffer '(#\o #\l #\l #\e #\h)))
-    (buffer->string buffer)))
-
 (test-assert "guard:comment?"
   (guard:comment? '() #\;))
 
@@ -39,12 +34,12 @@
 (test-equal "action:start-section"
   '(("test"))
   (let ((ctx (make <ini-context>)))
-    (action:store ctx #\t)
-    (action:store ctx #\e)
-    (action:store ctx #\s)
-    (action:store ctx #\t)
+    (push-event-to-buffer ctx #\t)
+    (push-event-to-buffer ctx #\e)
+    (push-event-to-buffer ctx #\s)
+    (push-event-to-buffer ctx #\t)
     (action:start-section ctx #\nul)
-    (ini-context-result ctx)))
+    (context-result ctx)))
 
 
 (define exit-status (test-runner-fail-count (test-runner-current)))

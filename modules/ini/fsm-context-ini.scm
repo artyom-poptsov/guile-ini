@@ -1,6 +1,6 @@
 ;;; fsm-context-ini.scm -- Finite State Machine context for INI parsing.
 
-;; Copyright (C) 2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2021-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,10 +28,7 @@
   #:use-module (scheme documentation)
   #:use-module (oop goops)
   #:use-module (ini fsm-context)
-  #:re-export (char-context-update-counters!)
   #:export (<ini-context>
-            ini-context-result
-            buffer->string
             stanza->list-of-strings
             guard:comment/read?
             guard:comment?
@@ -48,15 +45,7 @@
   (read-comments?
    #:init-keyword #:read-comments?
    #:init-value   #t
-   #:getter       ini-context-read-comments?)
-
-  ;; The result of parsing.
-  ;;
-  ;; <list>
-  (result
-   #:init-value '()
-   #:getter     ini-context-result
-   #:setter     ini-context-result-set!))
+   #:getter       ini-context-read-comments?))
 
 
 
@@ -64,10 +53,6 @@
   (map (lambda (elem)
          (list->string elem))
        (reverse stanza)))
-
-(define-method (buffer->string (buffer <list>))
-  "Convert a BUFFER to a string."
-  (list->string (reverse buffer)))
 
 
 
@@ -84,47 +69,44 @@
 
 (define (action:start-section ctx ch)
   "Start a new section."
-  (let ((title (buffer->string (context-buffer ctx))))
-    (ini-context-result-set! ctx (cons (list title)
-                                       (ini-context-result ctx)))
-    (context-buffer-clear! ctx)
-    ctx))
+  (let ((title (list->string (context-buffer/reversed ctx))))
+    (context-result-set! ctx (cons (list title)
+                                       (context-result ctx)))
+    (clear-buffer ctx)))
 
 (define (action:append-property ctx ch)
   "Append a new property to the parsing result."
   (let ((stanza (stanza->list-of-strings (context-stanza ctx)))
-        (buffer (context-buffer ctx))
-        (result (ini-context-result ctx)))
-    (ini-context-result-set! ctx
-                             (cons
-                              (append (if (null? result)
-                                          (list #f)
-                                          (car result))
-                                      (list (cons (car stanza)
-                                                  (buffer->string buffer))))
-                              (if (null? result)
-                                  '()
-                                  (cdr result))))
-    (context-buffer-clear! ctx)
-    (context-stanza-clear! ctx)
-    ctx))
+        (buffer (context-buffer/reversed ctx))
+        (result (context-result ctx)))
+    (context-result-set! ctx
+                         (cons
+                          (append (if (null? result)
+                                      (list #f)
+                                      (car result))
+                                  (list (cons (car stanza)
+                                              (list->string buffer))))
+                          (if (null? result)
+                              '()
+                              (cdr result))))
+    (clear-buffer ctx)
+    (clear-stanza ctx)))
 
 (define (action:append-comment ctx ch)
   "Append a commentary to the result of parsing."
-  (let ((buffer (context-buffer ctx))
-        (result (ini-context-result ctx)))
-    (ini-context-result-set! ctx
-                             (cons
-                              (append (if (null? result)
-                                          (list #f)
-                                          (car result))
-                                      (list (cons 'comment
-                                                  (buffer->string buffer))))
-                              (if (null? result)
-                                  '()
-                                  (cdr result))))
-    (context-buffer-clear! ctx)
-    (context-stanza-clear! ctx)
-    ctx))
+  (let ((buffer (context-buffer/reversed ctx))
+        (result (context-result ctx)))
+    (context-result-set! ctx
+                         (cons
+                          (append (if (null? result)
+                                      (list #f)
+                                      (car result))
+                                  (list (cons 'comment
+                                              (list->string buffer))))
+                          (if (null? result)
+                              '()
+                              (cdr result))))
+    (clear-buffer ctx)
+    (clear-stanza ctx)))
 
 ;;; fsm-context-ini.scm ends here.

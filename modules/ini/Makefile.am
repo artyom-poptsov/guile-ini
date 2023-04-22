@@ -39,6 +39,7 @@ godir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache/ini/
 GUILE_SMC_CONTEXT_ARGS = \
 	--log-driver file \
 	--log-opt "file=fsm-context.log" \
+	--type oop \
 	-m "(ini fsm-context)"
 
 GUILE_SMC_ARGS = \
@@ -47,7 +48,7 @@ GUILE_SMC_ARGS = \
 	-L $(abs_top_srcdir)/modules:$(abs_top_builddir)/modules \
 	--fsm-name ini-fsm \
 	--fsm-module "(ini fsm)" \
-	-U "((ini fsm-context) (ini fsm-context-ini))" \
+	-U "((ini fsm-context) (ini fsm-context-ini) (smc context char))" \
 	--validate
 
 GUILE_SMC_ENV = GUILE_AUTO_COMPILE=0
