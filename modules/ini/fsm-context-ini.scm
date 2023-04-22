@@ -65,9 +65,7 @@
 (define (action:start-section ctx ch)
   "Start a new section."
   (let ((title (list->string (context-buffer/reversed ctx))))
-    (context-result-set! ctx (cons (list title)
-                                       (context-result ctx)))
-    (clear-buffer ctx)))
+    (clear-buffer (push-event-to-result ctx (list title)))))
 
 (define (action:append-property ctx ch)
   "Append a new property to the parsing result."
