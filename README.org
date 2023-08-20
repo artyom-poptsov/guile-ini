@@ -29,6 +29,6 @@
 (define (main args)
   (let ((data (ini->scm (current-input-port))))
     (pretty-print data)
-    (scm->ini data (current-output-port))))
+    (scm->ini data #:port (current-output-port))
 #+END_EXAMPLE
-   
+
