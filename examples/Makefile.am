@@ -53,8 +53,7 @@ custom-fsm.scm: fsm.puml
 	$< > $@
 
 CLEANFILES = \
-	custom-fsm.scm		\
-	main.scm
+	$(SOURCES)
 
 # Makefile.am ends here
 
