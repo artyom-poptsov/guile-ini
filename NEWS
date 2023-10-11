@@ -7,6 +7,14 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.5.4 (2023-10-11)
+** =ini->scm= now allows to set the logging driver and options
+=ini->scm= would always use "syslog" logger and would fail when the "syslog"
+is not available on the system.  Now the procedure allows to set the logger
+driver and its options.
+** Update the Texinfo documentation
+** Add more usage examples
+See the =examples= directory.
 * Version 0.5.3 (2023-05-01)
 ** Update to work with the latest version of Guile-SMC
 * Version 0.5.2 (2022-09-24)
