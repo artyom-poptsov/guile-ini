@@ -41,8 +41,14 @@
 (define* (ini->scm port
                    #:key
                    (read-comments? #t)
-                   (debug-mode? #f))
+                   (debug-mode? #f)
+                   (log-driver  #f)
+                   (log-opt     '()))
   "Read INI data from a PORT and convert it to the scheme representation."
+
+  (when log-driver
+    (smc-log-init! log-driver log-opt))
+
   (let ((fsm (make <ini-fsm> #:debug-mode? debug-mode?)))
     (let ((context (fsm-run! fsm (make <ini-context>
                                    #:port           port
