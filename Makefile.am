@@ -1,6 +1,6 @@
 ## Makefile.am -- Config file for GNU Automake.
 ##
-## Copyright (C) 2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2021-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-INI.
 ##
@@ -19,7 +19,7 @@
 
 ACLOCAL_AMFLAGS = -I build-aux
 
-SUBDIRS = build-aux modules doc tests
+SUBDIRS = build-aux modules doc tests examples
 
 EXTRA_DIST = \
 	.dir-locals.el

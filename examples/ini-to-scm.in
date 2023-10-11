@@ -1,0 +1,29 @@
+#!@GUILE@ \
+-L modules -e main -s
+!#
+
+(use-modules (ice-9 pretty-print)
+             (ini))
+
+(define %test-data
+  "\
+; last modified 1 April 2001 by John Doe
+[owner]
+name = John Doe
+organization = Acme Widgets Inc.
+
+[database]
+; use IP address in case network name resolution is not working
+server = 192.0.2.62
+port = 143
+file = \"payroll.dat\"")
+
+
+(define (main args)
+  (let ((data (ini->scm (open-input-string %test-data)
+                        #:log-driver "file"
+                        #:log-opt    '((file . "ini-to-scm.scm.log")))))
+    (display "data:\n")
+    (pretty-print data)
+    (format #t "owner:    ~S~%" (assoc-ref data "owner"))
+    (format #t "database: ~S~%" (assoc-ref data "database"))))
