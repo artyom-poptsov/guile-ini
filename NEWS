@@ -7,8 +7,21 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
-* Unreleased
+* Version 0.5.5 (2025-01-07)
 ** =ini->scm= and =scm->ini= now allow to set the comment prefix
+The INI reading/writing procedures now allow to set the commentary prefix.  It
+allows library to read and write such variations of INI data as Desktop Entry
+format <https://www.freedesktop.org/wiki/Specifications/desktop-entry-spec/>
+defined by Freedesktop.org.
+
+The default delimiter is ";" so old applications that use Guile-INI can use
+the new version without any changes.  On the other hand the applications that
+use the new API cannot work with old versions.
+
+The Texinfo documentation is updated accordingly.
+
+Reported by sirgazil in
+<https://github.com/artyom-poptsov/guile-ini/issues/5>
 * Version 0.5.4 (2023-10-11)
 ** =ini->scm= now allows to set the logging driver and options
 =ini->scm= would always use "syslog" logger and would fail when the "syslog"
