@@ -7,6 +7,8 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Unreleased
+** =ini->scm= and =scm->ini= now allow to set the comment prefix
 * Version 0.5.4 (2023-10-11)
 ** =ini->scm= now allows to set the logging driver and options
 =ini->scm= would always use "syslog" logger and would fail when the "syslog"

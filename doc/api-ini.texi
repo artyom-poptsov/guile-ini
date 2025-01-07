@@ -1,6 +1,6 @@
 @c -*-texinfo-*-
 @c This file is part of Guile-INI Reference Manual.
-@c Copyright (C) 2021-2023 Artyom V. Poptsov
+@c Copyright (C) 2021-2025 Artyom V. Poptsov
 @c See the file guile-ini.texi for copying conditions.
 
 @node INI
@@ -11,6 +11,7 @@ format.
 
 @deffn {Scheme Procedure} ini->scm @
                port @
+               [#:comment-prefix=%default-comment-prefix] @
                [#:read-comments?=#t] @
                [#:debug-mode?=#f] @
                [#:log-driver=#f] @
@@ -23,14 +24,21 @@ Read INI data from a @var{port} and convert it to the Scheme representation.
 ``file'', ``null''.  Using @var{log-opt} parameter one can pass additional
 options for a logging driver.
 
+@var{comment-prefix} allows to change the default comment prefix (which is
+``;'') for the input data.
+
 @end deffn
 
 @deffn {Scheme Procedure} scm->ini @
                data @
                [#:port=(current-output-port)] @
+               [#:comment-prefix=%default-comment-prefix] @
                [#:comment-writer=%default-comment-writer]
 
 Write @var{data} to a @var{port} in the INI format.
+
+@var{comment-prefix} allows to change the default comment prefix (which is
+``;'') for the output data.
 
 @end deffn
 

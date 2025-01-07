@@ -1,6 +1,6 @@
 ;;; fsm-context-ini.scm -- Finite State Machine context for INI parsing.
 
-;; Copyright (C) 2021-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2021-2025 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,10 +33,27 @@
             ini:comment/read?
             action:start-section
             action:append-property
-            action:append-comment))
+            action:append-comment
+
+            %default-comment-prefix))
+
+
+(define-with-docs %default-comment-prefix
+  "Default comment prefix for INI format."
+  #\;)
+
+
 
 (define-class-with-docs <ini-context> (<char-context>)
   "This class describes a context for INI parser finite-state machine."
+
+  ;; The commentary prefix.
+  ;;
+  ;; <symbol>
+  (comment-prefix
+   #:init-keyword #:comment-prefix
+   #:init-value   %default-comment-prefix
+   #:getter       ini-context-comment-prefix)
 
   ;; Whether the parser should read the comments or skip them.
   ;;
@@ -57,7 +74,7 @@
 
 (define (ini:comment/read? ctx ch)
   "Check if a character CH is a comment symbol and we must read the comment."
-  (and (char=? ch #\;)
+  (and (char=? ch (ini-context-comment-prefix ctx))
        (ini-context-read-comments? ctx)))
 
 

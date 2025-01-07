@@ -30,6 +30,22 @@ port=143
 file=\"payroll.dat\"
 ")
 
+;; See
+;; <https://github.com/artyom-poptsov/guile-ini/issues/5>
+(define %test-ini-custom-comment-prefix
+  "
+# last modified 1 April 2001 by John Doe
+[owner]
+name=John Doe
+organization=Acme Widgets Inc.
+
+[database]
+# use IP address in case network name resolution is not working
+server=192.0.2.62
+port=143
+file=\"payroll.dat\"
+")
+
 (test-assert "ini->scm: Don't read comments"
   (with-input-from-string
       %test-ini
@@ -42,6 +58,18 @@ file=\"payroll.dat\"
       %test-ini
     (lambda ()
       (let* ((data   (ini->scm (current-input-port)))
+             (global (cdar data)))
+        (and (equal? (caar global) 'comment)
+             (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
+
+;; See
+;; <https://github.com/artyom-poptsov/guile-ini/issues/5>
+(test-assert "ini->scm: Custom comment prefix"
+  (with-input-from-string
+      %test-ini-custom-comment-prefix
+    (lambda ()
+      (let* ((data   (ini->scm (current-input-port)
+                               #:comment-prefix #\#))
              (global (cdar data)))
         (and (equal? (caar global) 'comment)
              (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
@@ -67,6 +95,27 @@ file=\"payroll.dat\"
         (with-output-to-string
           (lambda ()
             (scm->ini data)))))))
+
+(test-equal "scm->ini: Custom comment prefix"
+  (string-append
+   "#  last modified 1 April 2001 by John Doe\n\n"
+   "[owner]\n"
+   "name=John Doe\n"
+   "organization=Acme Widgets Inc.\n\n"
+   "[database]\n"
+   "#  use IP address in case network name resolution is not working\n"
+   "server=192.0.2.62\n"
+   "port=143\n"
+   "file=\"payroll.dat\"\n"
+   "\n")
+  (with-input-from-string
+      %test-ini
+    (lambda ()
+      (let ((data   (ini->scm (current-input-port))))
+        (with-output-to-string
+          (lambda ()
+            (scm->ini data #:comment-prefix #\#)))))))
+
 
 
 (define exit-status (test-runner-fail-count (test-runner-current)))

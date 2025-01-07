@@ -1,6 +1,6 @@
 ;;; ini.scm -- Guile INI format parser.  The main module.
 
-;; Copyright (C) 2021-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2021-2025 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 (define* (ini->scm port
                    #:key
                    (read-comments? #t)
+                   (comment-prefix %default-comment-prefix)
                    (debug-mode? #f)
                    (log-driver  #f)
                    (log-opt     '()))
@@ -51,6 +52,7 @@
 
   (let ((fsm (make <ini-fsm> #:debug-mode? debug-mode?)))
     (let ((context (fsm-run! fsm (make <ini-context>
+                                   #:comment-prefix comment-prefix
                                    #:port           port
                                    #:read-comments? read-comments?))))
       (when debug-mode?
@@ -60,11 +62,11 @@
 
 
 
-(define (%default-comment-writer comment port)
+(define (%default-comment-writer prefix comment port)
   "This writer adds '; ' before a COMMENT and writes it to a PORT."
-  (format port "; ~a~%" comment))
+  (format port "~a ~a~%" prefix comment))
 
-(define (%write-section section port comment-writer)
+(define (%write-section section port comment-prefix comment-writer)
   "Write a new INI section to the output port."
   (let ((title (car section))
         (props (cdr section)))
@@ -75,7 +77,7 @@
                  ((string? (car prop))
                   (format port "~a=~a~%" (car prop) (cdr prop)))
                  ((equal? (car prop) 'comment)
-                  (comment-writer (cdr prop) port))
+                  (comment-writer comment-prefix (cdr prop) port))
                  ((equal? (car prop) 'newline)
                   (newline port))
                  (else
@@ -86,6 +88,7 @@
 (define* (scm->ini data
                    #:key
                    (port           (current-output-port))
+                   (comment-prefix %default-comment-prefix)
                    (comment-writer %default-comment-writer))
   "Write DATA to a PORT in the INI format. "
   (let* ((global (find (lambda (section)
@@ -96,10 +99,10 @@
                      data)))
 
     (when global
-      (%write-section global port comment-writer))
+      (%write-section global port comment-prefix comment-writer))
 
     (for-each (lambda (section)
-                (%write-section section port comment-writer))
+                (%write-section section port comment-prefix comment-writer))
               data)))
 
 ;;; ini.scm ends here.

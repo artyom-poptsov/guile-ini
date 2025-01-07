@@ -30,6 +30,13 @@
   (let ((ctx (make <ini-context> #:read-comments? #f)))
     (ini:comment/read? ctx #\;)))
 
+(test-equal "guard:comment/read?: Custom prefix"
+  #t
+  (let ((ctx (make <ini-context>
+               #:read-comments? #t
+               #:comment-prefix #\#)))
+    (ini:comment/read? ctx #\#)))
+
 (test-equal "action:start-section"
   '(("test"))
   (let ((ctx (make <ini-context>)))

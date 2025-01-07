@@ -1,6 +1,6 @@
 @c -*-texinfo-*-
 @c This file is part of Guile-INI Reference Manual.
-@c Copyright (C) 2021 Artyom V. Poptsov
+@c Copyright (C) 2021-2025 Artyom V. Poptsov
 @c See the file guile-ini.texi for copying conditions.
 
 @node FSM Context
@@ -10,6 +10,8 @@
                [#:read-comments?=#t]
 This class describes an INI parser context.
 @table @asis
+@item #:comment-prefix (value <symbol>)
+The commentary prefix.  Default commentary prefix is ``;''.
 @item #:read-comments? (value <boolean>)
 Whether the parser should read the comments or skip them.
 @end table
@@ -32,6 +34,9 @@ Check if a character @var{ch} is a comment symbol.
 @deffn {Scheme Procedure} guard:comment/read? ch ctx
 Check if a character @var{ch} is a comment symbol and we must read the
 comment.
+
+The procedure uses the comment prefix from the @var{ctx} @code{<ini-context>}
+instance.
 @end deffn
 
 @deffn {Scheme Procedure} action:start-section ch ctx
