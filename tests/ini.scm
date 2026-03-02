@@ -1,6 +1,7 @@
 (add-to-load-path (getenv "abs_top_srcdir"))
 
-(use-modules (srfi srfi-64)
+(use-modules (srfi srfi-2)
+             (srfi srfi-64)
              (srfi srfi-26)
              (oop goops)
              (tests common)
@@ -61,6 +62,16 @@ file=\"payroll.dat\"
              (global (cdar data)))
         (and (equal? (caar global) 'comment)
              (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
+
+;; See <https://github.com/artyom-poptsov/guile-ini/issues/6>.
+(test-assert "ini->scm: No trailing newline"
+  (with-input-from-string
+      (string-drop-right %test-ini 1)
+    (lambda ()
+      (and-let* ((data (ini->scm (current-input-port) #:read-comments? #f))
+                 (database (assoc-ref data "database"))
+                 (file (assoc-ref database "file")))
+        (equal? "\"payroll.dat\"" file)))))
 
 ;; See
 ;; <https://github.com/artyom-poptsov/guile-ini/issues/5>

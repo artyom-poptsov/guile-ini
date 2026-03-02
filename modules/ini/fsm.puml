@@ -84,7 +84,7 @@ trim_section_property_value --> read_section_property_value: char:newline?
 trim_section_property_value --> read_section_property_value: guard:#t -> push-event-to-buffer
 
 read_section_property_value: Read the section property value.
-read_section_property_value ---> [*]: char:eof-object?
+read_section_property_value --> read_section_content: char:eof-object? -> action:append-property
 read_section_property_value --> read_section_content: char:newline? -> action:append-property
 read_section_property_value -> read_section_property_value: guard:#t -> push-event-to-buffer
 @enduml
