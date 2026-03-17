@@ -3,7 +3,7 @@ dnl   Process this file with autoconf to produce configure.
 dnl
 
 define(GUILE_INI_CONFIGURE_COPYRIGHT, [[
-Copyright (C) 2021-2024 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+Copyright (C) 2021-2026 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 
 This file is part of Guile-INI.
 
