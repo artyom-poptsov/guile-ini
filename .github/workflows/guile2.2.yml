@@ -23,6 +23,10 @@ jobs:
               texinfo \
               help2man
 
+      - name: Select Guile 2.2
+        run: |
+          echo 1 | sudo update-alternatives --config guile
+
       - name: Install Guile-SMC
         run: |
           git clone https://github.com/artyom-poptsov/guile-smc
