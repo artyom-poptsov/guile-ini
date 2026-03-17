@@ -1,6 +1,6 @@
 ;; guix.scm --- GNU Guix package recipe    -*- coding: utf-8 -*-
 ;;
-;; Copyright (C) 2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2022-2026 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; Author: Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;; Created: 20 February 2022
@@ -52,29 +52,38 @@
 (define %source-dir (dirname (current-filename)))
 
 
-(package
-    (name "guile-ini")
-    (version "git")
-    (source (local-file %source-dir
-                        #:recursive? #t
-                        #:select? (git-predicate %source-dir)))
-    (build-system gnu-build-system)
-    (arguments
-     `(#:make-flags '("GUILE_AUTO_COMPILE=0")))     ;to prevent guild warnings
-    (native-inputs
-     (list autoconf automake pkg-config texinfo))
-    (inputs
-     (list bash-minimal
-           guile-3.0
-           guile-lib))
-    (propagated-inputs
-     (list guile-smc))
-    (home-page "https://github.com/artyom-poptsov/guile-ini")
-    (synopsis "Guile library for INI format support")
-    (description
-     "@code{guile-ini} is a GNU Guile library for working with the
+(define guile-ini
+  (package
+   (name "guile-ini")
+   (version "git")
+   (source (local-file %source-dir
+                       #:recursive? #t
+                       #:select? (git-predicate %source-dir)))
+   (build-system gnu-build-system)
+   (arguments
+    `(#:make-flags '("GUILE_AUTO_COMPILE=0")))     ;to prevent guild warnings
+   (native-inputs (list autoconf
+                        automake
+                        pkg-config
+                        texinfo
+                        ;; needed when cross-compiling.
+                        guile-3.0
+                        guile-lib
+                        guile-smc))
+   (inputs
+    (list bash-minimal
+          guile-3.0
+          guile-lib))
+   (propagated-inputs
+    (list guile-smc))
+   (home-page "https://github.com/artyom-poptsov/guile-ini")
+   (synopsis "Guile library for INI format support")
+   (description
+    "@code{guile-ini} is a GNU Guile library for working with the
 @url{https://en.wikipedia.org/wiki/INI_file, INI format}.  This library
 provides API for reading and writing INI data.")
-    (license gpl3))
+   (license gpl3)))
+
+guile-ini
 
 ;;; guix.scm ends here.
