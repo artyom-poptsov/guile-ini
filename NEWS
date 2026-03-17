@@ -7,6 +7,18 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Version 0.5.6 (2026-03-17)
+** =ini->scm=: Support files with no trailing newline
+=ini->scm= would always fail to read the last line from the input file when
+the last line is finished with EOF instead of a proper newline symbol.  Now
+Guile-INI reads the last line even without a trailing newline.
+
+Reported by Noé Lopez <noelopez@free.fr> in
+<https://github.com/artyom-poptsov/guile-ini/issues/6>
+
+Fixed by Noé Lopez <noelopez@free.fr> in
+https://github.com/artyom-poptsov/guile-ini/pull/7
+
 * Version 0.5.5 (2025-01-07)
 ** =ini->scm= and =scm->ini= now allow to set the comment prefix
 The INI reading/writing procedures now allow to set the commentary prefix.  It
