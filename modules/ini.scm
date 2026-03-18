@@ -1,6 +1,6 @@
 ;;; ini.scm -- Guile INI format parser.  The main module.
 
-;; Copyright (C) 2021-2025 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2021-2026 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -45,7 +45,15 @@
                    (debug-mode? #f)
                    (log-driver  #f)
                    (log-opt     '()))
-  "Read INI data from a PORT and convert it to the scheme representation."
+  "Read INI data from a PORT and convert it to the scheme representation.
+Optional arguments include:
+- READ-COMMENTS? (boolean) controls if the commentaries from the input data
+must be read or not (#t by default);
+- COMMENT-PREFIX (string) controls the commentary prefix for the input
+data (\";\" by default);
+- DEBUG-MODE? (boolean) enables or disables the debug mode (#f by default);
+- LOG-DRIVER (boolean) sets the logging driver (#f by default); LOG-OPT (list)
+sets the logger options (an empty list by default.)"
 
   (when log-driver
     (smc-log-init! log-driver log-opt))
