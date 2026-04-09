@@ -29,8 +29,10 @@
   #:use-module (oop goops)
   #:use-module (ini fsm-context)
   #:export (<ini-context>
+            guile-ini-comment?
             stanza->list-of-strings
             ini:comment/read?
+            ini:comment/skip?
             action:start-section
             action:append-property
             action:append-comment
@@ -72,19 +74,27 @@
 
 
 
+(define (guile-ini-comment? ctx ch)
+  (let ((comment-prefix (ini-context-comment-prefix ctx)))
+    (cond
+     ((char? comment-prefix)
+      (char=? ch comment-prefix))
+     ((char-set? comment-prefix)
+      (char-set-contains? comment-prefix ch))
+     (else
+      (throw 'guile-ini-error
+             "Wrong prefix type"
+             comment-prefix)))))
+
 (define (ini:comment/read? ctx ch)
   "Check if a character CH is a comment symbol and we must read the comment."
-  (let ((comment-prefix (ini-context-comment-prefix ctx)))
-    (and (cond
-          ((char? comment-prefix)
-           (char=? ch comment-prefix))
-          ((char-set? comment-prefix)
-           (char-set-contains? comment-prefix ch))
-          (else
-           (throw 'guile-ini-error
-                  "Wrong prefix type"
-                  comment-prefix)))
-         (ini-context-read-comments? ctx))))
+  (and (guile-ini-comment? ctx ch)
+       (ini-context-read-comments? ctx)))
+
+(define (ini:comment/skip? ctx ch)
+  "Check if a character CH is a comment symbol and we must skip the comment."
+  (and (guile-ini-comment? ctx ch)
+       (not (ini-context-read-comments? ctx))))
 
 
 
