@@ -129,6 +129,26 @@ file=\"payroll.dat\"
           (lambda ()
             (scm->ini data #:comment-prefix #\#)))))))
 
+(test-equal "scm->ini: Skip custom comments"
+  (string-append
+   "[owner]\n"
+   "name=John Doe\n"
+   "organization=Acme Widgets Inc.\n\n"
+   "[database]\n"
+   "server=192.0.2.62\n"
+   "port=143\n"
+   "file=\"payroll.dat\"\n"
+   "\n")
+  (with-input-from-string
+      %test-ini-custom-comment-prefix
+    (lambda ()
+      (let ((data (ini->scm (current-input-port)
+                            #:comment-prefix #\#
+                            #:read-comments? #f)))
+        (with-output-to-string
+          (lambda ()
+            (scm->ini data)))))))
+
 
 ;; Taken from an example "smb.conf" file.
 

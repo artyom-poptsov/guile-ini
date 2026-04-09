@@ -47,6 +47,17 @@
     (action:start-section ctx #\nul)
     (context-result ctx)))
 
+(test-equal "guile-ini-comment?: a symbol"
+  #t
+  (let ((ctx (make <ini-context> #:comment-prefix #\#)))
+    (guile-ini-comment? ctx #\#)))
+
+(test-equal "guile-ini-comment?: a character set"
+  #t
+  (let ((ctx (make <ini-context>
+               #:comment-prefix (list->char-set '(#\# #\;)))))
+    (guile-ini-comment? ctx #\;)))
+
 
 (define exit-status (test-runner-fail-count (test-runner-current)))
 
