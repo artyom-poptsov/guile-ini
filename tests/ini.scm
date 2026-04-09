@@ -74,11 +74,11 @@ file=\"payroll.dat\"
       (ini->scm (current-input-port)))))
 
 (test-equal "ini->scm: Read values with single quotes"
-  '(("global" ("comment" . "Fred's Service")))
+  '(("fredsdir" ("comment" . "Fred's Service")))
   (with-input-from-string
       (string-join
        (list
-        "[global]"
+        "[fredsdir]"
         "comment = Fred's Service")
        "\n")
     (lambda ()
