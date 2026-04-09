@@ -1,6 +1,6 @@
 @c -*-texinfo-*-
 @c This file is part of Guile-INI Reference Manual.
-@c Copyright (C) 2021-2025 Artyom V. Poptsov
+@c Copyright (C) 2021-2026 Artyom V. Poptsov
 @c See the file guile-ini.texi for copying conditions.
 
 @node INI
@@ -25,7 +25,11 @@ Read INI data from a @var{port} and convert it to the Scheme representation.
 options for a logging driver.
 
 @var{comment-prefix} allows to change the default comment prefix (which is
-``;'') for the input data.
+``;'') for the input data.  @var{comment-prefix} can be set to either a
+character, a list or a character set.  When the prefix is set to either a list
+or a character set, all the symbols included into a set or a list are
+considered as comment prefixes.  Note that Guile-INI currently does not allow
+to write comments with mixed comment style.
 
 @end deffn
 
