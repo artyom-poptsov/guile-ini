@@ -49,9 +49,10 @@
 (define-class-with-docs <ini-context> (<char-context>)
   "This class describes a context for INI parser finite-state machine."
 
-  ;; The commentary prefix.
+  ;; The commentary prefix.  This slot can be set to a single character or to
+  ;; a character set (in case when a mixed comment prefix data must be read.)
   ;;
-  ;; <symbol>
+  ;; <character> | <character-set>
   (comment-prefix
    #:init-keyword #:comment-prefix
    #:init-value   %default-comment-prefix
@@ -68,6 +69,7 @@
 
 
 (define-method (stanza->list-of-strings (stanza <list>))
+  "Convert a STANZA list to a list of strings."
   (map (lambda (elem)
          (list->string elem))
        (reverse stanza)))
@@ -75,6 +77,8 @@
 
 
 (define (guile-ini-comment? ctx ch)
+  "Check if a character CH is a commentary according to the comment prefix
+specified in a context CTX."
   (let ((comment-prefix (ini-context-comment-prefix ctx)))
     (cond
      ((char? comment-prefix)
