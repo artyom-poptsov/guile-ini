@@ -49,8 +49,8 @@
 Optional arguments include:
 - READ-COMMENTS? (boolean) controls if the commentaries from the input data
 must be read or not (#t by default);
-- COMMENT-PREFIX (char or list) controls the commentary prefix for the input
-data (';' by default);
+- COMMENT-PREFIX (char or a list or a character set) controls the commentary
+prefix for the input data (';' by default);
 - DEBUG-MODE? (boolean) enables or disables the debug mode (#f by default);
 - LOG-DRIVER (boolean) sets the logging driver (#f by default); LOG-OPT (list)
 sets the logger options (an empty list by default.)"
@@ -65,6 +65,8 @@ sets the logger options (an empty list by default.)"
            comment-prefix)
           ((list? comment-prefix)
            (list->char-set comment-prefix))
+          ((character-set? comment-prefix)
+           comment-prefix)
           (else
            (throw 'guile-ini-error
                   "Wrong prefix type (expecting a symbol or a list)"
