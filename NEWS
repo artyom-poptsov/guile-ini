@@ -13,8 +13,11 @@ Guile-INI now allows to read INI data with mixed comment style (e.g. when both
 "#" and ";" are used as the prefix.)
 
 A mixed comment prefix can be set through "#:comment-prefix" option -- now the
-option accepts the prefix in either a character, a list of character or a
+option accepts the prefix as either a character, a list of character or a
 character set.
+
+An example where such mixed comment style can be found is Samba configuration
+file (=smb.conf=) where we can see comments with "#" and ";" prefixes.
 ** =ini->scm=: Remove assumptions about the comment prefix           :BUGFIX:
 =ini->scm= would always fail to skip comments with a custom prefix.  Now, that
 the assumptions about the comment prefix are removed, =ini->scm= can read and
