@@ -141,7 +141,7 @@ file=\"payroll.dat\"
    writable = yes
 ")
 
-(test-equal "scm->ini: smb.conf"
+(test-equal "scm->ini: smb.conf: single comment style"
   (string-append
    "# ============================ Share Definitions ==============================\n\n"
    "[homes]\n"
@@ -154,6 +154,48 @@ file=\"payroll.dat\"
     (lambda ()
       (let ((data   (ini->scm (current-input-port)
                               #:comment-prefix #\#)))
+        (with-output-to-string
+          (lambda ()
+            (scm->ini data #:comment-prefix #\#)))))))
+
+(define %test-ini-smb-with-different-comment-styles
+  "
+#============================ Share Definitions ==============================
+[homes]
+   comment = Home Directories
+   browsable = no
+   writable = yes
+
+# Un-comment the following and create the netlogon directory for Domain Logons
+; [netlogon]
+;   comment = Network Logon Service
+;   path = /usr/local/samba/lib/netlogon
+;   guest ok = yes
+;   writable = no
+;   share modes = no
+")
+
+;; Read INI-file with mixed comment prefixes.
+(test-equal "scm->ini: smb.conf: read a mixed comment style"
+  (string-append
+   "# ============================ Share Definitions ==============================\n\n"
+   "[homes]\n"
+   "comment=Home Directories\n"
+   "browsable=no\n"
+   "writable=yes\n"
+   "#  Un-comment the following and create the netlogon directory for Domain Logons\n"
+   "#  [netlogon]\n"
+   "#    comment = Network Logon Service\n"
+   "#    path = /usr/local/samba/lib/netlogon\n"
+   "#    guest ok = yes\n"
+   "#    writable = no\n"
+   "#    share modes = no\n\n")
+  (with-input-from-string
+      %test-ini-smb-with-different-comment-styles
+    (lambda ()
+      (let ((data (ini->scm (current-input-port)
+                            #:comment-prefix '(#\# #\;))))
+        ;; data))))
         (with-output-to-string
           (lambda ()
             (scm->ini data #:comment-prefix #\#)))))))

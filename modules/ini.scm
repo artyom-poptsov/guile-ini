@@ -49,8 +49,8 @@
 Optional arguments include:
 - READ-COMMENTS? (boolean) controls if the commentaries from the input data
 must be read or not (#t by default);
-- COMMENT-PREFIX (string) controls the commentary prefix for the input
-data (\";\" by default);
+- COMMENT-PREFIX (char or list) controls the commentary prefix for the input
+data (';' by default);
 - DEBUG-MODE? (boolean) enables or disables the debug mode (#f by default);
 - LOG-DRIVER (boolean) sets the logging driver (#f by default); LOG-OPT (list)
 sets the logger options (an empty list by default.)"
@@ -58,7 +58,17 @@ sets the logger options (an empty list by default.)"
   (when log-driver
     (smc-log-init! log-driver log-opt))
 
-  (let ((fsm (make <ini-fsm> #:debug-mode? debug-mode?)))
+  (let ((fsm (make <ini-fsm> #:debug-mode? debug-mode?))
+        (comment-prefix
+         (cond
+          ((char? comment-prefix)
+           comment-prefix)
+          ((list? comment-prefix)
+           (list->char-set comment-prefix))
+          (else
+           (throw 'guile-ini-error
+                  "Wrong prefix type (expecting a symbol or a list)"
+                  comment-prefix)))))
     (let ((context (fsm-run! fsm (make <ini-context>
                                    #:comment-prefix comment-prefix
                                    #:port           port

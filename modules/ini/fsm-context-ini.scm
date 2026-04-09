@@ -1,6 +1,6 @@
 ;;; fsm-context-ini.scm -- Finite State Machine context for INI parsing.
 
-;; Copyright (C) 2021-2025 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2021-2026 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -74,8 +74,17 @@
 
 (define (ini:comment/read? ctx ch)
   "Check if a character CH is a comment symbol and we must read the comment."
-  (and (char=? ch (ini-context-comment-prefix ctx))
-       (ini-context-read-comments? ctx)))
+  (let ((comment-prefix (ini-context-comment-prefix ctx)))
+    (and (cond
+          ((char? comment-prefix)
+           (char=? ch comment-prefix))
+          ((char-set? comment-prefix)
+           (char-set-contains? comment-prefix ch))
+          (else
+           (throw 'guile-ini-error
+                  "Wrong prefix type"
+                  comment-prefix)))
+         (ini-context-read-comments? ctx))))
 
 
 
