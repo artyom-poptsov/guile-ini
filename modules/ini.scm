@@ -83,11 +83,12 @@ sets the logger options (an empty list by default.)"
 
 
 (define (%default-comment-writer prefix comment port)
-  "This writer adds '; ' before a COMMENT and writes it to a PORT."
+  "This writer adds a comment PREFIX before a COMMENT and writes it to a PORT."
   (format port "~a ~a~%" prefix comment))
 
 (define (%write-section section port comment-prefix comment-writer)
-  "Write a new INI section to the output port."
+  "Write a new INI SECTION to the output PORT with the specified COMMENT-PREFIX
+and COMMENT-WRITER."
   (let ((title (car section))
         (props (cdr section)))
     (when title
@@ -110,7 +111,15 @@ sets the logger options (an empty list by default.)"
                    (port           (current-output-port))
                    (comment-prefix %default-comment-prefix)
                    (comment-writer %default-comment-writer))
-  "Write DATA to a PORT in the INI format. "
+  "Write DATA to a PORT in the INI format.  Optional parameter COMMENT-PREFIX
+specifies the comment prefix (a character) that will be used to write
+comments.  The behavior of the INI writer in relation to comments can be
+changed by specifying a custom COMMENT-WRITER.  A COMMENT-WRITER is called as
+follows:
+  (comment-writer prefix comment port)
+
+Where PREFIX is the comment prefix specified to 'scm->ini' procedure, COMMENT
+is the comment string to write and PORT is a port to write the comment to."
   (let* ((global (find (lambda (section)
                          (not (car section)))
                        data))
