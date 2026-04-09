@@ -106,6 +106,17 @@ file=\"payroll.dat\"
         (and (equal? (caar global) 'comment)
              (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
 
+(test-equal "ini->scm: Comment prefix specified as a character set"
+  '((#f (comment . " test 1")
+        (comment . " test 2")))
+  (with-input-from-string
+      (string-append
+       "; test 1\n"
+       "# test 2\n")
+    (lambda ()
+      (ini->scm (current-input-port)
+                #:comment-prefix (list->char-set '(#\# #\;))))))
+
 (test-equal "scm->ini"
   ;; TODO: Fix the INI generator as currently it adds extra newlines and
   ;;       spaces.

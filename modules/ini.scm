@@ -65,7 +65,7 @@ sets the logger options (an empty list by default.)"
            comment-prefix)
           ((list? comment-prefix)
            (list->char-set comment-prefix))
-          ((character-set? comment-prefix)
+          ((char-set? comment-prefix)
            comment-prefix)
           (else
            (throw 'guile-ini-error
