@@ -1,4 +1,4 @@
-# Guile-SSH -- An SSH library for GNU Guile.
+# Guile-INI -- An INI library for GNU Guile.
 #
 # Process this file with autoconf to produce a configure script.
 #
