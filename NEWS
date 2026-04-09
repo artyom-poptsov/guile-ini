@@ -7,6 +7,18 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Unreleased
+** =ini->scm=: Support files with mixed comment styles
+Guile-INI now allows to read INI data with mixed comment style (e.g. when both
+"#" and ";" are used as the prefix.)
+
+A mixed comment prefix can be set through "#:comment-prefix" option -- now the
+option accepts the prefix in either a character, a list of character or a
+character set.
+** =ini->scm=: Remove assumptions about the comment prefix           :BUGFIX:
+=ini->scm= would always fail to skip comments with a custom prefix.  Now, that
+the assumptions about the comment prefix are removed, =ini->scm= can read and
+skip comments with custom prefixes.
 * Version 0.5.6 (2026-03-17)
 ** =ini->scm=: Support files with no trailing newline
 =ini->scm= would always fail to read the last line from the input file when
