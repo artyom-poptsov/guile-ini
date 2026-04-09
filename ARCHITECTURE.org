@@ -1,0 +1,44 @@
+#+TITLE: Guile-INI Architecture
+#+STARTUP: content hidestars
+
+Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
+
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+* Architecture
+** Versioning
+Guile-INI uses [[https://semver.org/][semantic versioning]].
+
+Starting from the version 1.0.0, the format is =MAJOR.MINOR.PATCH=, where the
+rules for incrementing each part are:
+
+- =MAJOR= version is incremented when incompatible API changes are introduced.
+- =MINOR= version is incremented when some functionality is added in a
+  backward compatible manner.
+- =PATCH= version is incremented when backward compatible bug fixes are
+  introduced.
+** Code Map
+*** Overview
+All the GNU Guile modules are in =modules= directory.
+*** Main Module
+For the common tasks there's a =(ini)= module that provides procedures to
+read/write INI data.
+
+*** Finite State Machine (FSM) Modules
+All the files required to build and run the parser FSM are placed in =(ini
+fsm)= modules.  The FSM code is compiled from a [[https://plantuml.com/][PlantUML]] diagram (=fsm.puml=)
+by [[https://github.com/artyom-poptsov/guile-smc][Guile-SMC]].
+
+*** Tests
+Tests are in =tests= directory.  They are written using SRFI-61.
+
+When a new functionality is being added a new test case (or several test
+cases) should be written for it.
+
+*** Documentation
+Documentation is written in Texinfo format and can be found in =doc=
+directory.  It compiles into =guile-ini.info= Info file and is being copied
+into =${prefix}/share/info/= during the installation process.
+

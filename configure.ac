@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------------
 
 AC_INIT([Guile-INI],
-  [0.5.6],
+  [1.0.0],
   [poptsov.artyom@gmail.com],
   [guile-ini],
   [https://github.com/artyom-poptsov/guile-ini])
