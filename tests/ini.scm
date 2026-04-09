@@ -65,6 +65,17 @@ file=\"payroll.dat\"
         (and (equal? (caar global) 'comment)
              (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
 
+(test-equal "ini->scm: Read values with single quotes"
+  '(("global" ("comment" . "Fred's Service")))
+  (with-input-from-string
+      (string-join
+       (list
+        "[global]"
+        "comment = Fred's Service")
+       "\n")
+    (lambda ()
+      (ini->scm (current-input-port)))))
+
 ;; See <https://github.com/artyom-poptsov/guile-ini/issues/6>.
 (test-assert "ini->scm: No trailing newline"
   (with-input-from-string
