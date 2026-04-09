@@ -47,6 +47,8 @@ port=143
 file=\"payroll.dat\"
 ")
 
+
+
 (test-assert "ini->scm: Don't read comments"
   (with-input-from-string
       %test-ini
@@ -127,6 +129,34 @@ file=\"payroll.dat\"
           (lambda ()
             (scm->ini data #:comment-prefix #\#)))))))
 
+
+;; Taken from an example "smb.conf" file.
+
+(define %test-ini-smb
+  "
+#============================ Share Definitions ==============================
+[homes]
+   comment = Home Directories
+   browsable = no
+   writable = yes
+")
+
+(test-equal "scm->ini: smb.conf"
+  (string-append
+   "# ============================ Share Definitions ==============================\n\n"
+   "[homes]\n"
+   "comment=Home Directories\n"
+   "browsable=no\n"
+   "writable=yes\n"
+   "\n")
+  (with-input-from-string
+      %test-ini-smb
+    (lambda ()
+      (let ((data   (ini->scm (current-input-port)
+                              #:comment-prefix #\#)))
+        (with-output-to-string
+          (lambda ()
+            (scm->ini data #:comment-prefix #\#)))))))
 
 
 (define exit-status (test-runner-fail-count (test-runner-current)))
