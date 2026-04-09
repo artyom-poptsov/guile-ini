@@ -65,6 +65,14 @@ file=\"payroll.dat\"
         (and (equal? (caar global) 'comment)
              (equal? (cdar global) " last modified 1 April 2001 by John Doe"))))))
 
+;; Read properties that don't belong to any section.
+(test-equal "ini->scm: Read global properties"
+  '((#f ("comment" . "Fred's Service")))
+  (with-input-from-string
+      "comment = Fred's Service\n"
+    (lambda ()
+      (ini->scm (current-input-port)))))
+
 (test-equal "ini->scm: Read values with single quotes"
   '(("global" ("comment" . "Fred's Service")))
   (with-input-from-string
